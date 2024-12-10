@@ -42,7 +42,8 @@ body {
     background: var(--toolbar-bg);
     display: flex;
     flex-direction: column;
-    width: 90vw;
+    width: 90%;
+    max-width: 1200px;
     height: 80vh;
     border-radius: var(--border-radius);
     overflow: hidden;
@@ -140,6 +141,7 @@ body {
     padding: 8px 16px;
     border-bottom: 1px solid var(--divider-color);
     gap: 20px;
+    flex-wrap: wrap;
 }
 
 .top-menu a {
@@ -166,6 +168,7 @@ body {
     flex-wrap: wrap;
     gap: 20px;
     align-content: flex-start;
+    justify-content: flex-start;
 }
 
 /* Items in icon view */
@@ -205,6 +208,40 @@ body {
 ::-webkit-scrollbar-thumb {
     background: #525255;
     border-radius: 4px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .top-menu {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .content-area {
+        padding: 8px;
+        gap: 10px;
+    }
+
+    .item {
+        width: 60px;
+    }
+
+    .item-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 1.2rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .toolbar-title {
+        display: none;
+    }
+
+    .top-menu a {
+        font-size: 0.8rem;
+        padding: 6px 10px;
+    }
 }
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-Ah4Vl3SpXwvUyB5hUFyHrvH/qeVmJs1yOpGpk41NLxwbcLZ9oXD8I9I8DV1gJqTnJfm5HqYfYfK9c1L1DtFApQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
