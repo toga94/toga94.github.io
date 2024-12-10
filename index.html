@@ -9,7 +9,6 @@
 :root {
     --window-bg: #1C1C1E; 
     --toolbar-bg: #2C2C2E;
-    --sidebar-bg: #2C2C2E;
     --divider-color: #3A3A3C;
     --text-color: #FFFFFF;
     --muted-text: #A1A1A6;
@@ -50,7 +49,7 @@ body {
     box-shadow: 0 0 40px rgba(0,0,0,0.5);
 }
 
-/* Titlebar/Toolbar Area */
+/* Toolbar */
 .toolbar {
     display: flex;
     align-items: center;
@@ -101,7 +100,7 @@ body {
     color: var(--muted-text);
 }
 
-/* Segmented Control on the right */
+/* Segmented Control */
 .toolbar-right {
     display: flex;
     align-items: center;
@@ -132,43 +131,29 @@ body {
     color: var(--text-color);
 }
 
-/* Finder Layout */
-.layout {
-    flex: 1;
+/* Top Menu */
+.top-menu {
     display: flex;
-    overflow: hidden;
+    justify-content: center;
+    align-items: center;
+    background: var(--toolbar-bg);
+    padding: 8px 16px;
+    border-bottom: 1px solid var(--divider-color);
+    gap: 20px;
 }
 
-/* Sidebar */
-.sidebar {
-    width: 200px;
-    background: var(--sidebar-bg);
-    border-right: 1px solid var(--divider-color);
-    padding: 10px;
-    overflow-y: auto;
-}
-
-.sidebar h3 {
-    font-size: 0.8rem;
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: var(--muted-text);
-    margin-bottom: 8px;
-    margin-top: 16px;
-}
-
-.sidebar a {
-    display: block;
+.top-menu a {
     color: var(--text-color);
     text-decoration: none;
     font-size: 0.9rem;
-    padding: 4px 0;
-    transition: color 0.2s;
+    padding: 8px 12px;
+    border-radius: var(--border-radius);
+    transition: background 0.2s, color 0.2s;
 }
 
-.sidebar a:hover {
-    color: var(--accent-color);
+.top-menu a:hover {
+    background: var(--accent-color);
+    color: #FFFFFF;
 }
 
 /* Content Area */
@@ -248,55 +233,49 @@ body {
         </div>
     </div>
 
-    <!-- Layout -->
-    <div class="layout">
-        <!-- Sidebar -->
-        <div class="sidebar">
-            <h3>Favorites</h3>
-            <a href="#">About Me</a>
-            <a href="#">Skills</a>
-            <a href="#">Projects</a>
-            <a href="#">Contact</a>
-            
-            <h3>Locations</h3>
-            <a href="#">My Work</a>
-            <a href="#">Archived</a>
-            <a href="#">External</a>
+    <!-- Top Menu -->
+    <div class="top-menu">
+        <a href="#">About Me</a>
+        <a href="#">Skills</a>
+        <a href="#">Projects</a>
+        <a href="#">Contact</a>
+        <a href="#">My Work</a>
+        <a href="#">Archived</a>
+        <a href="#">External</a>
+    </div>
+
+    <!-- Content Area -->
+    <div class="content-area">
+        <!-- Example items as icons -->
+        <div class="item">
+            <div class="item-icon"><i class="fas fa-gamepad"></i></div>
+            <span>Adventure Quest</span>
         </div>
-        
-        <!-- Content Area -->
-        <div class="content-area">
-            <!-- Example items as icons -->
-            <div class="item">
-                <div class="item-icon"><i class="fas fa-gamepad"></i></div>
-                <span>Adventure Quest</span>
-            </div>
-            <div class="item">
-                <div class="item-icon"><i class="fas fa-chess-knight"></i></div>
-                <span>Battle Arena</span>
-            </div>
-            <div class="item">
-                <div class="item-icon"><i class="fas fa-brain"></i></div>
-                <span>Logic Puzzler</span>
-            </div>
-            <div class="item">
-                <div class="item-icon"><i class="fas fa-file-code"></i></div>
-                <span>Source Code</span>
-            </div>
-            <div class="item">
-                <div class="item-icon"><i class="fas fa-file-alt"></i></div>
-                <span>Resume</span>
-            </div>
-            <div class="item">
-                <div class="item-icon"><i class="fas fa-images"></i></div>
-                <span>Art Assets</span>
-            </div>
-            <div class="item">
-                <div class="item-icon"><i class="fas fa-folder"></i></div>
-                <span>Design Docs</span>
-            </div>
-            <!-- Add more items as needed -->
+        <div class="item">
+            <div class="item-icon"><i class="fas fa-chess-knight"></i></div>
+            <span>Battle Arena</span>
         </div>
+        <div class="item">
+            <div class="item-icon"><i class="fas fa-brain"></i></div>
+            <span>Logic Puzzler</span>
+        </div>
+        <div class="item">
+            <div class="item-icon"><i class="fas fa-file-code"></i></div>
+            <span>Source Code</span>
+        </div>
+        <div class="item">
+            <div class="item-icon"><i class="fas fa-file-alt"></i></div>
+            <span>Resume</span>
+        </div>
+        <div class="item">
+            <div class="item-icon"><i class="fas fa-images"></i></div>
+            <span>Art Assets</span>
+        </div>
+        <div class="item">
+            <div class="item-icon"><i class="fas fa-folder"></i></div>
+            <span>Design Docs</span>
+        </div>
+        <!-- Add more items as needed -->
     </div>
 </div>
 </body>
