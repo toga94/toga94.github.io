@@ -136,6 +136,21 @@ body {
 }
 
 /* Top Menu */
+.top-menu-container {
+    position: relative;
+}
+
+.menu-toggle {
+    display: none;
+    background: var(--toolbar-bg);
+    color: var(--text-color);
+    border: none;
+    padding: 8px 12px;
+    font-size: 1rem;
+    cursor: pointer;
+    border-radius: var(--border-radius);
+}
+
 .top-menu {
     display: flex;
     justify-content: center;
@@ -160,6 +175,26 @@ body {
 .top-menu a:hover {
     background: var(--accent-color);
     color: #FFFFFF;
+}
+
+/* Dropdown menu for mobile */
+@media (max-width: 768px) {
+    .top-menu {
+        display: none;
+        flex-direction: column;
+        gap: 10px;
+        background: var(--toolbar-bg);
+        border-radius: var(--border-radius);
+        padding: 10px;
+    }
+
+    .menu-toggle {
+        display: block;
+    }
+
+    .top-menu.show {
+        display: flex;
+    }
 }
 
 /* Content Area */
@@ -214,40 +249,6 @@ body {
     background: #525255;
     border-radius: 4px;
 }
-
-/* Responsive Design */
-@media (max-width: 768px) {
-    .top-menu {
-        flex-direction: column;
-        gap: 10px;
-    }
-
-    .content-area {
-        padding: 8px;
-        gap: 10px;
-    }
-
-    .item {
-        width: 60px;
-    }
-
-    .item-icon {
-        width: 40px;
-        height: 40px;
-        font-size: 1.2rem;
-    }
-}
-
-@media (max-width: 480px) {
-    .toolbar-title {
-        display: none;
-    }
-
-    .top-menu a {
-        font-size: 0.8rem;
-        padding: 6px 10px;
-    }
-}
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-Ah4Vl3SpXwvUyB5hUFyHrvH/qeVmJs1yOpGpk41NLxwbcLZ9oXD8I9I8DV1gJqTnJfm5HqYfYfK9c1L1DtFApQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
@@ -262,9 +263,7 @@ body {
                 <div class="traffic-light fullscreen"></div>
             </div>
         </div>
-
         <div class="toolbar-title">Togrul's Portfolio</div>
-
         <div class="toolbar-right">
             <div class="segmented-control">
                 <button title="Icon View"><i class="fas fa-th-large"></i></button>
@@ -276,19 +275,21 @@ body {
     </div>
 
     <!-- Top Menu -->
-    <div class="top-menu">
-        <a href="#">About Me</a>
-        <a href="#">Skills</a>
-        <a href="#">Projects</a>
-        <a href="#">Contact</a>
-        <a href="#">My Work</a>
-        <a href="#">Archived</a>
-        <a href="#">External</a>
+    <div class="top-menu-container">
+        <button class="menu-toggle">Menu</button>
+        <div class="top-menu">
+            <a href="#">About Me</a>
+            <a href="#">Skills</a>
+            <a href="#">Projects</a>
+            <a href="#">Contact</a>
+            <a href="#">My Work</a>
+            <a href="#">Archived</a>
+            <a href="#">External</a>
+        </div>
     </div>
 
     <!-- Content Area -->
     <div class="content-area">
-        <!-- Example items as icons -->
         <div class="item">
             <div class="item-icon"><i class="fas fa-gamepad"></i></div>
             <span>Adventure Quest</span>
@@ -317,8 +318,14 @@ body {
             <div class="item-icon"><i class="fas fa-folder"></i></div>
             <span>Design Docs</span>
         </div>
-        <!-- Add more items as needed -->
     </div>
 </div>
+
+<script>
+    document.querySelector('.menu-toggle').addEventListener('click', () => {
+        const topMenu = document.querySelector('.top-menu');
+        topMenu.classList.toggle('show');
+    });
+</script>
 </body>
 </html>
