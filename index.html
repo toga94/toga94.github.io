@@ -1,749 +1,303 @@
 <!DOCTYPE html>
-<html lang="en-US" class="loading">
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="profile" href="https://gmpg.org/xfn/11">
-<link rel="pingback" href="https://mypoorbrain.com/xmlrpc.php">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>macOS Finder Inspired</title>
+<style>
+/* Color references based on macOS dark mode */
+:root {
+    --window-bg: #1C1C1E; 
+    --toolbar-bg: #2C2C2E;
+    --sidebar-bg: #2C2C2E;
+    --divider-color: #3A3A3C;
+    --text-color: #FFFFFF;
+    --muted-text: #A1A1A6;
+    --accent-color: #0A84FF;
 
-<script src="https://use.typekit.net/hns0otm.js"></script>
-<script>try{Typekit.load({ async: true });}catch(e){}</script>
+    --font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    --border-radius: 6px;
+    --icon-size: 24px;
+    --toolbar-height: 38px;
+}
 
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
-<meta name='robots' content='index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1' />
+body {
+    background: var(--window-bg);
+    font-family: var(--font-family);
+    color: var(--text-color);
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
 
-	<!-- This site is optimized with the Yoast SEO plugin v17.0 - https://yoast.com/wordpress/plugins/seo/ -->
-	<title>Toghrul's Portfolio</title>
-	<meta name="description" content="Brain powered creative fun. Portfolio and scrapbook of designer and illustrator Tim Smith, Principal of Design at ustwo / ustwo Auto." />
-	<link rel="canonical" href="https://toga94.github.io/" />
-	<meta property="og:locale" content="en_US" />
-	<meta property="og:type" content="website" />
-	<meta property="og:title" content="Toghrul's Portfolio" />
-	<meta property="og:description" content="Brain powered creative fun. Portfolio and scrapbook of designer and illustrator Tim Smith, Principal of Design at ustwo / ustwo Auto." />
-	<meta property="og:url" content="https://toga94.github.io/" />
-	<meta property="og:site_name" content="My Poor Brain" />
-	<meta property="article:modified_time" content="2016-05-21T15:31:28+00:00" />
-	<meta name="twitter:card" content="summary_large_image" />
-	<meta name="twitter:site" content="@mypoorbrain" />
-	<script type="application/ld+json" class="yoast-schema-graph">{"@context":"https://schema.org",
-	"@graph":[{"@type":"WebSite","@id":"https://toga94.github.io/#website",
-	"url":"https://toga94.github.io/","name":"My Poor Brain","description":"",
-	"potentialAction":[{"@type":"SearchAction","target":{"@type":"EntryPoint",
-	"urlTemplate":"https://toga94.github.io/?s={search_term_string}"},
-	"query-input":"required name=search_term_string"}],"inLanguage":"en-US"},
-	{"@type":"WebPage","@id":"https://toga94.github.io/#webpage","url":"https://toga94.github.io/",
-	"name":"Toghrul's Portfolio","isPartOf":{"@id":"https://toga94.github.io/#website"},
-	"datePublished":"2016-02-18T13:29:15+00:00","dateModified":"2016-05-21T15:31:28+00:00",
-	"description":"Brain powered creative fun. Portfolio and scrapbook of designer and illustrator Tim Smith, Principal of Design at ustwo / ustwo Auto.",
-	"breadcrumb":{"@id":"https://toga94.github.io/#breadcrumb"},"inLanguage":"en-US",
-	"potentialAction":[{"@type":"ReadAction","target":["https://toga94.github.io/"]}]},{"@type":"BreadcrumbList",
-	"@id":"https://toga94.github.io/#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"Home"}]}]}</script>
-	<!-- / Yoast SEO plugin. -->
+/* Window Container */
+.finder-window {
+    background: var(--toolbar-bg);
+    display: flex;
+    flex-direction: column;
+    width: 90vw;
+    height: 80vh;
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    box-shadow: 0 0 40px rgba(0,0,0,0.5);
+}
 
+/* Titlebar/Toolbar Area */
+.toolbar {
+    display: flex;
+    align-items: center;
+    background: var(--toolbar-bg);
+    height: var(--toolbar-height);
+    padding: 0 8px;
+    border-bottom: 1px solid var(--divider-color);
+}
 
-<link rel='dns-prefetch' href='//s.w.org' />
-<link rel="alternate" type="application/rss+xml" title="My Poor Brain &raquo; Feed" href="https://toga94.github.io/feed/" />
-<link rel="alternate" type="application/rss+xml" title="My Poor Brain &raquo; Comments Feed" href="https://toga94.github.io/comments/feed/" />
-		<!-- This site uses the Google Analytics by ExactMetrics plugin v7.0.0 - Using Analytics tracking - https://www.exactmetrics.com/ -->
-							<script src="//www.googletagmanager.com/gtag/js?id=G-VWJB2N2FL4"  type="text/javascript" data-cfasync="false" async></script>
-			<script type="text/javascript" data-cfasync="false">
-				var em_version = '7.0.0';
-				var em_track_user = true;
-				var em_no_track_reason = '';
-				
-								var disableStrs = [
-										'ga-disable-G-VWJB2N2FL4',
-														];
+.toolbar-left {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
 
-				/* Function to detect opted out users */
-				function __gtagTrackerIsOptedOut() {
-					for ( var index = 0; index < disableStrs.length; index++ ) {
-						if ( document.cookie.indexOf( disableStrs[ index ] + '=true' ) > -1 ) {
-							return true;
-						}
-					}
+/* Traffic Light Buttons */
+.traffic-lights {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-right: 12px;
+}
 
-					return false;
-				}
+.traffic-light {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+}
 
-				/* Disable tracking if the opt-out cookie exists. */
-				if ( __gtagTrackerIsOptedOut() ) {
-					for ( var index = 0; index < disableStrs.length; index++ ) {
-						window[ disableStrs[ index ] ] = true;
-					}
-				}
+.close {
+    background: #FF605C;
+}
 
-				/* Opt-out function */
-				function __gtagTrackerOptout() {
-					for ( var index = 0; index < disableStrs.length; index++ ) {
-						document.cookie = disableStrs[ index ] + '=true; expires=Thu, 31 Dec 2099 23:59:59 UTC; path=/';
-						window[ disableStrs[ index ] ] = true;
-					}
-				}
+.minimize {
+    background: #FFBD44;
+}
 
-				if ( 'undefined' === typeof gaOptout ) {
-					function gaOptout() {
-						__gtagTrackerOptout();
-					}
-				}
-								window.dataLayer = window.dataLayer || [];
+.fullscreen {
+    background: #00CA4E;
+}
 
-				window.ExactMetricsDualTracker = {
-					helpers: {},
-					trackers: {},
-				};
-				if ( em_track_user ) {
-					function __gtagDataLayer() {
-						dataLayer.push( arguments );
-					}
+/* Title in the center of the toolbar */
+.toolbar-title {
+    flex: 1;
+    text-align: center;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--muted-text);
+}
 
-					function __gtagTracker( type, name, parameters ) {
-						if ( type === 'event' ) {
-															parameters.send_to = exactmetrics_frontend.v4_id;
-								var hookName = name;
-								if ( typeof parameters[ 'event_category' ] !== 'undefined' ) {
-									hookName = parameters[ 'event_category' ] + ':' + name;
-								}
+/* Segmented Control on the right */
+.toolbar-right {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
 
-								if ( typeof ExactMetricsDualTracker.trackers[ hookName ] !== 'undefined' ) {
-									ExactMetricsDualTracker.trackers[ hookName ]( parameters );
-								} else {
-									__gtagDataLayer( 'event', name, parameters );
-								}
-							
-													} else {
-							__gtagDataLayer.apply( null, arguments );
-						}
-					}
-					__gtagTracker( 'js', new Date() );
-					__gtagTracker( 'set', {
-						'developer_id.dNDMyYj' : true,
-											} );
-										__gtagTracker( 'config', 'G-VWJB2N2FL4', {"forceSSL":"true"} );
-															window.gtag = __gtagTracker;										(
-						function () {
-							/* https://developers.google.com/analytics/devguides/collection/analyticsjs/ */
-							/* ga and __gaTracker compatibility shim. */
-							var noopfn = function () {
-								return null;
-							};
-							var newtracker = function () {
-								return new Tracker();
-							};
-							var Tracker = function () {
-								return null;
-							};
-							var p = Tracker.prototype;
-							p.get = noopfn;
-							p.set = noopfn;
-							p.send = function (){
-								var args = Array.prototype.slice.call(arguments);
-								args.unshift( 'send' );
-								__gaTracker.apply(null, args);
-							};
-							var __gaTracker = function () {
-								var len = arguments.length;
-								if ( len === 0 ) {
-									return;
-								}
-								var f = arguments[len - 1];
-								if ( typeof f !== 'object' || f === null || typeof f.hitCallback !== 'function' ) {
-									if ( 'send' === arguments[0] ) {
-										var hitConverted, hitObject = false, action;
-										if ( 'event' === arguments[1] ) {
-											if ( 'undefined' !== typeof arguments[3] ) {
-												hitObject = {
-													'eventAction': arguments[3],
-													'eventCategory': arguments[2],
-													'eventLabel': arguments[4],
-													'value': arguments[5] ? arguments[5] : 1,
-												}
-											}
-										}
-										if ( 'pageview' === arguments[1] ) {
-											if ( 'undefined' !== typeof arguments[2] ) {
-												hitObject = {
-													'eventAction': 'page_view',
-													'page_path' : arguments[2],
-												}
-											}
-										}
-										if ( typeof arguments[2] === 'object' ) {
-											hitObject = arguments[2];
-										}
-										if ( typeof arguments[5] === 'object' ) {
-											Object.assign( hitObject, arguments[5] );
-										}
-										if ( 'undefined' !== typeof arguments[1].hitType ) {
-											hitObject = arguments[1];
-											if ( 'pageview' === hitObject.hitType ) {
-												hitObject.eventAction = 'page_view';
-											}
-										}
-										if ( hitObject ) {
-											action = 'timing' === arguments[1].hitType ? 'timing_complete' : hitObject.eventAction;
-											hitConverted = mapArgs( hitObject );
-											__gtagTracker( 'event', action, hitConverted );
-										}
-									}
-									return;
-								}
+.segmented-control {
+    display: flex;
+    background: #3A3A3C;
+    border-radius: var(--border-radius);
+    overflow: hidden;
+}
 
-								function mapArgs( args ) {
-									var arg, hit = {};
-									var gaMap = {
-										'eventCategory': 'event_category',
-										'eventAction': 'event_action',
-										'eventLabel': 'event_label',
-										'eventValue': 'event_value',
-										'nonInteraction': 'non_interaction',
-										'timingCategory': 'event_category',
-										'timingVar': 'name',
-										'timingValue': 'value',
-										'timingLabel': 'event_label',
-										'page' : 'page_path',
-										'location' : 'page_location',
-										'title' : 'page_title',
-									};
-									for ( arg in args ) {
-																				if ( ! ( ! args.hasOwnProperty(arg) || ! gaMap.hasOwnProperty(arg) ) ) {
-											hit[gaMap[arg]] = args[arg];
-										} else {
-											hit[arg] = args[arg];
-										}
-									}
-									return hit;
-								}
+.segmented-control button {
+    background: transparent;
+    border: none;
+    color: var(--muted-text);
+    padding: 0 10px;
+    display: flex;
+    align-items: center;
+    height: 24px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
 
-								try {
-									f.hitCallback();
-								} catch ( ex ) {
-								}
-							};
-							__gaTracker.create = newtracker;
-							__gaTracker.getByName = newtracker;
-							__gaTracker.getAll = function () {
-								return [];
-							};
-							__gaTracker.remove = noopfn;
-							__gaTracker.loaded = true;
-							window['__gaTracker'] = __gaTracker;
-						}
-					)();
-									} else {
-										console.log( "" );
-					( function () {
-							function __gtagTracker() {
-								return null;
-							}
-							window['__gtagTracker'] = __gtagTracker;
-							window['gtag'] = __gtagTracker;
-					} )();
-									}
-			</script>
-				<!-- / Google Analytics by ExactMetrics -->
-		<link rel='stylesheet' id='wp-block-library-css'  href='https://mypoorbrain.com/wp-includes/css/dist/block-library/style.min.css?ver=5.8.4' type='text/css' media='all' />
-<link rel='stylesheet' id='hf-woo-style-css'  href='https://mypoorbrain.com/wp-content/themes/mpb16/style.css?ver=5.8.4' type='text/css' media='all' />
-<link rel='stylesheet' id='foundation-css'  href='https://mypoorbrain.com/wp-content/themes/mpb16/foundation/css/foundation.min.css?ver=5.8.4' type='text/css' media='all' />
-<link rel='stylesheet' id='hamblyfreeman-animate-style-css'  href='https://mypoorbrain.com/wp-content/themes/mpb16/css/animate.css?ver=1649320156' type='text/css' media='all' />
-<link rel='stylesheet' id='hamblyfreeman-custom-style-css'  href='https://mypoorbrain.com/wp-content/themes/mpb16/stylesheets/screen.css?ver=1649320156' type='text/css' media='all' />
-<script type='text/javascript' id='exactmetrics-frontend-script-js-extra'>
-/* <![CDATA[ */
-var exactmetrics_frontend = {"js_events_tracking":"true","download_extensions":"zip,mp3,mpeg,pdf,docx,pptx,xlsx,rar","inbound_paths":"[{\"path\":\"\\\/go\\\/\",\"label\":\"affiliate\"},{\"path\":\"\\\/recommend\\\/\",\"label\":\"affiliate\"}]","home_url":"https:\/\/mypoorbrain.com","hash_tracking":"false","ua":"","v4_id":"G-VWJB2N2FL4"};
-/* ]]> */
-</script>
-<script type='text/javascript' src='https://mypoorbrain.com/wp-content/plugins/google-analytics-dashboard-for-wp/assets/js/frontend-gtag.min.js?ver=7.0.0' id='exactmetrics-frontend-script-js'></script>
-<script type='text/javascript' src='https://mypoorbrain.com/wp-includes/js/jquery/jquery.min.js?ver=3.6.0' id='jquery-core-js'></script>
-<script type='text/javascript' src='https://mypoorbrain.com/wp-includes/js/jquery/jquery-migrate.min.js?ver=3.3.2' id='jquery-migrate-js'></script>
-<link rel="https://api.w.org/" href="https://mypoorbrain.com/wp-json/" /><link rel="alternate" type="application/json" href="https://mypoorbrain.com/wp-json/wp/v2/pages/1112" /><link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://mypoorbrain.com/xmlrpc.php?rsd" />
-<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://mypoorbrain.com/wp-includes/wlwmanifest.xml" /> 
-<meta name="generator" content="WordPress 5.8.4" />
-<link rel='shortlink' href='https://mypoorbrain.com/' />
-<link rel="alternate" type="application/json+oembed" href="https://mypoorbrain.com/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fmypoorbrain.com%2F" />
-<link rel="alternate" type="text/xml+oembed" href="https://mypoorbrain.com/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fmypoorbrain.com%2F&#038;format=xml" />
-<style type="text/css">.recentcomments a{display:inline !important;padding:0 !important;margin:0 !important;}</style>
-	
-	<style id="antiClickjack">body{display:none !important;}</style>		
-	<script type="text/javascript">
-	   if (self === top) {
-	       var antiClickjack = document.getElementById("antiClickjack");
-	       antiClickjack.parentNode.removeChild(antiClickjack);
-	   } else {
-	       top.location = self.location;
-	   }
-	   console.log("antiClickjack de-activated");
-	</script>
+.segmented-control button:hover {
+    background: rgba(255,255,255,0.2);
+    color: var(--text-color);
+}
 
+/* Finder Layout */
+.layout {
+    flex: 1;
+    display: flex;
+    overflow: hidden;
+}
 
-	    <link rel="shortcut icon" sizes="16x16" type="image/x-icon" href="https://mypoorbrain.com/wp-content/themes/mpb16/img/mpb.png">
-		<link rel="shortcut icon" sizes="any" href="https://mypoorbrain.com/wp-content/themes/mpb16/img/favicon.png" />
+/* Sidebar */
+.sidebar {
+    width: 200px;
+    background: var(--sidebar-bg);
+    border-right: 1px solid var(--divider-color);
+    padding: 10px;
+    overflow-y: auto;
+}
 
+.sidebar h3 {
+    font-size: 0.8rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--muted-text);
+    margin-bottom: 8px;
+    margin-top: 16px;
+}
 
-		<link rel="apple-touch-icon" href="https://mypoorbrain.com/wp-content/themes/mpb16/img/apple-touch-icon-60x60.png" />
-        <link rel="apple-touch-icon" sizes="76x76" href="https://mypoorbrain.com/wp-content/themes/mpb16/img/apple-touch-icon-76x76.png" />
-        <link rel="apple-touch-icon" sizes="120x120" href="https://mypoorbrain.com/wp-content/themes/mpb16/img/apple-touch-icon-120x120.png" />
-        <link rel="apple-touch-icon" sizes="152x152" href="https://mypoorbrain.com/wp-content/themes/mpb16/img/apple-touch-icon-152x152.png" />
+.sidebar a {
+    display: block;
+    color: var(--text-color);
+    text-decoration: none;
+    font-size: 0.9rem;
+    padding: 4px 0;
+    transition: color 0.2s;
+}
 
+.sidebar a:hover {
+    color: var(--accent-color);
+}
 
+/* Content Area */
+.content-area {
+    flex: 1;
+    background: var(--window-bg);
+    overflow-y: auto;
+    padding: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    align-content: flex-start;
+}
 
+/* Items in icon view */
+.item {
+    width: 80px;
+    text-align: center;
+    color: var(--text-color);
+    font-size: 0.8rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    cursor: default;
+}
 
+.item-icon {
+    width: 48px;
+    height: 48px;
+    background: var(--accent-color);
+    border-radius: var(--border-radius);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #FFFFFF;
+    font-size: 1.5rem;
+}
 
+/* Scrollbars (to resemble macOS) */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #525255;
+    border-radius: 4px;
+}
+</style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-Ah4Vl3SpXwvUyB5hUFyHrvH/qeVmJs1yOpGpk41NLxwbcLZ9oXD8I9I8DV1gJqTnJfm5HqYfYfK9c1L1DtFApQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
+<body>
+<div class="finder-window">
+    <!-- Toolbar -->
+    <div class="toolbar">
+        <div class="toolbar-left">
+            <div class="traffic-lights">
+                <div class="traffic-light close"></div>
+                <div class="traffic-light minimize"></div>
+                <div class="traffic-light fullscreen"></div>
+            </div>
+        </div>
 
-<style id="grid-margins"></style>
+        <div class="toolbar-title">Togrul's Portfolio</div>
 
-<body class="home page-template-default page page-id-1112 front-page">
+        <div class="toolbar-right">
+            <div class="segmented-control">
+                <button title="Icon View"><i class="fas fa-th-large"></i></button>
+                <button title="List View"><i class="fas fa-list"></i></button>
+                <button title="Column View"><i class="fas fa-columns"></i></button>
+                <button title="Gallery View"><i class="fas fa-image"></i></button>
+            </div>
+        </div>
+    </div>
 
-
-<header>
-
-	<div class="row">
-
-		<div class="large-1 small-6 logo columns 	">
-		
-			<a href="https://mypoorbrain.com/" >
-	
-	
-			<img src="https://i.ibb.co/QHhSXPW/profilepic.png" alt="profilepic" border="0" width = "96" height="96" >
-							
-
-			</a>
-			
-			
-		
-
-			
-			
-		</div>
-	
-		<div class="large-2 nav-1 columns">
-
-
-			<ul class="filters-button-group">
-
-				 <li class="nav-design"><a class="filter-link" data-filter=".design">Games</a></li>
-				 <li class="nav-illustration"><a class="filter-link" data-filter=".illustration">Designs</a> </li>
-				 <li class="nav-all"><a class="filter-link filter-all is-checked" data-filter="*">All work</a></li>
-				 
-			</ul>
-
-
-		</div>
-		
-		<div class="large-2 small-6 nav-2 columns end">
-
-			<div class="menu-menu-1-container"><ul id="menu-menu-1" class="menu"><li id="menu-item-1110" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1110"><a href="/CV2021.pdf">View my CV (PDF)</a></li>
-<li id="menu-item-1109" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1109"><a href="https://mypoorbrain.com/newsletter/">Portfolio</a></li>
-<li id="menu-item-1111" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1111"><a href="https://mypoorbrain.com/scrapbook/">Contact with me</a></li>
-</ul></div>
-		</div>
-
-	</div><!--/row-->
-
-</header>
-
-
-<nav>
-
-
- <ul>
-        <li id="social-linkedin">
-            <a class="greensock-light replace" href="https://www.linkedin.com/in/toghrul-huseynzade/"
-            id="btn-linkedin" target="_blank"><svg version="1.1" viewbox=
-            "0 0 72 72" x="0px" xmlns="http://www.w3.org/2000/svg" y="0px">
-            <g id="social_4">
-                <g>
-                    <rect fill="#BCBEC0" height="38.1" width="12.8" x="7.3" y=
-                    "26.1"></rect>
-                    <rect fill="#BCBEC0" height="38.1" width="12.8" x="26.8" y=
-                    "26.1"></rect>
-                    <path d=
-                    "M65.7,42.3v21.9H52.9V42.3c0,0,0.4-7.3-6.9-7.3c0,0-6.5,0.7-6.5,7.4l-0.3-10.8c0,0,3.1-6.4,11.9-6.4 S65.7,31.2,65.7,42.3z"
-                    fill="#BCBEC0"></path>
-                    <path d=
-                    "M21.1,14.4c0,3.7-3.3,6.6-7.4,6.6c-4.1,0-7.4-3-7.4-6.6c0-3.7,3.3-6.6,7.4-6.6 C17.8,7.8,21.1,10.8,21.1,14.4z"
-                    fill="#BCBEC0"></path>
-                </g>
-            </g></svg></a>
-        </li>
-        <li id="social-email">
-            <a target="_blank" class="greensock-light replace" href="mailto:twota.games@gmail.com" id="btn-email"
-            target="_top"><svg version="1.1" viewbox="0 0 72 72" x="0px" xmlns=
-            "http://www.w3.org/2000/svg" y="0px">
-            <g id="social_1">
-                <g>
-                    <polygon fill="#BCBEC0" points=
-                    "66.8,14.9 5.3,14.9 36,37.9"></polygon>
-                    <path d=
-                    "M36,43.9c-0.6,0-1.3-0.2-1.8-0.6l-32.1-24v33.5c0,2.4,1.9,4.3,4.3,4.3h59.3c2.4,0,4.3-1.9,4.3-4.3V19.3 L37.8,43.3C37.3,43.7,36.6,43.9,36,43.9z"
-                    fill="#BCBEC0"></path>
-                </g>
-            </g></svg></a>
-        </li>
-    </ul>		
-
-		
-	<button id="back-to-top">
-	
-				
-			<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-				 viewBox="0 0 90 50" enable-background="new 0 0 90 50" xml:space="preserve">
-			<g>
-				<path fill="#C7C6C8" d="M2.1,42.6L42.7,2c0.9-0.9,2.2-1.4,3.4-1.4c1.3,0,2.5,0.5,3.4,1.4l38.4,38.8L81,47.7L46.1,12.3L8.9,49.5
-					L2.1,42.6z"/>
-			</g>
-			</svg>
-	
-	</button>
-
-</nav>
-
-
-<div id="page" class="hfeed site">
-
-<section class="isotope-wrapper">
-
-	<div class="row">
-			
-		<div class="large-12 columns isotope-outside">
-		
-			
-		<div id="project-grid" class="grid">
-
-				
-					
-						
-				<div class="element-item design" data-category="design" data-subcategories="Game">
-				
-											
-								<span class="replace ribbon-new">
-								<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-									 viewBox="0 0 150 150" enable-background="new 0 0 150 150" xml:space="preserve">
-								<g>
-									<polygon fill="#454546" points="150,131.8 150,65.9 84.1,0 18.2,0 	"/>
-									<g>
-										<path fill="#F7F9FB" d="M82.9,48.5l6.8-14.2L79.2,44.8l-2.4-2.4l17.1-17.1l2.6,2.6l-6.6,13.6L100,31.4l2.4,2.4L85.3,50.9
-											L82.9,48.5z"/>
-										<path fill="#F7F9FB" d="M109.7,45.9l-4.4-4.4l-4.7,4.7l3.2,3.2l-2.4,2.4l-3.2-3.2L93,53.8l4.4,4.4l-2.4,2.4l-7-7l17.1-17.1l7,7
-											L109.7,45.9z"/>
-										<path fill="#F7F9FB" d="M105.5,71l8.6-12.1l-12,8.6l-2.2-2.2l14.5-19.6l2.6,2.6L108,59.8l11.8-8.6l2.1,2.1l-8.5,11.9l11.5-8.9
-											l2.5,2.5l-19.6,14.5L105.5,71z"/>
-									</g>
-								</g>
-								</svg>
-								</span>
-
-										
-
-												<img src="/time2dinner.png"
-     srcset="/time2dinner.png"
-     sizes="/time2dinner.png, 669px"  alt="Time2Dinner" />
-				
-					<a target="_blank" href="https://play.google.com/store/apps/details?id=com.TWOTAGames.Time2Dinner">
-						<div class="titles"><span>
-							
-							<h2>Time2Dinner</h2>
-							<h3>Android Game</h3>
-						</span></div>						
-					</a>
-				</div>
-			
-			
-			<div class="element-item design" data-category="design" data-subcategories="Game">
-												<img src="/ghostarena.jpg"
-     srcset="/ghostarena.jpg"
-     sizes="/ghostarena.jpg, 669px"  alt="GHOST ARENA" />
-				
-					<a target="_blank" href="https://globalgamejam.org/2022/games/ghost-arena-0">
-						<div class="titles"><span>
-							
-							<h2>GHOST ARENA</h2>
-							<h3>PC Game</h3>
-						</span></div>						
-					</a>
-				</div>	
-			
-			
-			
-					
-						<div class="element-item design" data-category="design" data-subcategories="Game">
-												<img src="/mirage.jpg"
-     srcset="/mirage.jpg"
-     sizes="/mirage.jpg, 669px"  alt="Mirage" />
-				
-					<a target="_blank" href="https://globalgamejam.org/2021/games/mirage-5">
-						<div class="titles"><span>
-							
-							<h2>Mirage</h2>
-							<h3>PC Game</h3>
-						</span></div>						
-					</a>
-				</div>	
-					
-						
-				<div class="element-item illustration" data-category="illustration" data-subcategories="Software">
-												<img src="/CVqur.jpg"
-     srcset="/CVqur.jpg"
-     sizes="/CVqur.jpg, 669px"  alt="Mirage" />
-				
-					<a target="_blank" href="#">
-						<div class="titles"><span>
-							
-							<h2>CVQur</h2>
-							<h3>Android APP</h3>
-						</span></div>						
-					</a>
-				</div>					
-						
-						
-						
-				<div class="element-item design" data-category="design" data-subcategories="Game">
-				
-								
-
-												<img src="/aladdin.jpg"
-     srcset="/aladdin.jpg"
-     sizes="/aladdin.jpg, 669px"  alt="Aladdin Unity Remake" />
-				
-					<a target="_blank" href="#">
-						<div class="titles"><span>
-							
-							<h2>Aladdin</h2>
-							<h3>Web Game</h3>
-						</span></div>						
-					</a>
-					
-					
-					
-				</div>
-			
-					
-				
-					
-						
-				<div class="element-item design" data-category="design" data-subcategories="Game">
-				
-								
-
-												<img src="/superman.jpg"
-     srcset="/superman.jpg"
-     sizes="/superman.jpg, 669px"  alt="Project Lead Image" />
-				
-					<a target="_blank" href="https://www.crazygames.ru/igra/the-superman-theme-is-aliens">
-						<div class="titles"><span>
-							
-							<h2>The Superman</h2>
-							<h3>Web Game</h3>
-						</span></div>						
-					</a>
-					
-					
-					
-				</div>
-				
-				
-				<div class="element-item design" data-category="design" data-subcategories="Game">
-												<img src="/caribbeansea.jpg"
-     srcset="/caribbeansea.jpg"
-     sizes="/caribbeansea.jpg, 669px"  alt="The Caribbean Sea 3D" />
-				
-					<a target="_blank" href="https://ru.y8.com/games/the_caribbean_sea_3d">
-						<div class="titles"><span>
-							
-							<h2>Caribbean Sea</h2>
-							<h3>Web Game</h3>
-						</span></div>						
-					</a>
-				</div>	
-					
-					
-					
-				<div class="element-item design" data-category="design" data-subcategories="Game">
-												<img src="/teddy.jpg"
-     srcset="/teddy.jpg"
-     sizes="/teddy.jpg, 669px"  alt="Super Teddy Bear" />
-				
-					<a target="_blank" href="https://www.youtube.com/watch?v=97hkMaw4pjU&ab_channel=OnbeeAlju">
-						<div class="titles"><span>
-							
-							<h2>Super Teddy</h2>
-							<h3>Web Game</h3>
-						</span></div>						
-					</a>
-					
-					
-					
-				</div>	
-				
-			
-					
-					
-			<div class="element-item bumper">
-				<span class="replace">Brain powered graphics fun</span>
-			</div>
-			
-		</div>
-		
-		<div class="clearer"></div>
-	
-	
-			</div>
-		</div>
-</section>	
-
-
-
-
-<footer>
-
-	<div class="row">
-
-
-
-
-
-		<div class="large-12 medium-12 small-12 columns tweet-post-share">
-		
-		
-		 
-		
-		
-		 		
-
- 				<a class="greensock" target="_blank" href="http://twitter.com/share?url=https://mypoorbrain.com/&text=Check out designer My Poor Brain">
- 				
- 				<svg version="1.1" viewbox=
-            "0 0 72 72" x="0px" xmlns="http://www.w3.org/2000/svg" y="0px">
-            <g id="share_tweet">
-                <path d=
-                "M61.6,22.9c0,0.6,0,1.1,0,1.7C61.7,42,48.4,62.2,24,62.2c-7.5,0-14.4-2.2-20.3-5.9c1,0.1,2.1,0.2,3.2,0.2 c6.2,0,11.9-2.1,16.4-5.7c-5.8-0.1-10.7-3.9-12.4-9.2c0.8,0.2,1.6,0.2,2.5,0.2c1.2,0,2.4-0.2,3.5-0.5c-6-1.2-10.6-6.6-10.6-13 c0-0.1,0-0.1,0-0.2c1.8,1,3.8,1.6,6,1.7c-3.5-2.4-5.9-6.4-5.9-11c0-2.4,0.6-4.7,1.8-6.6c6.5,8,16.3,13.3,27.3,13.8 c-0.2-1-0.3-2-0.3-3c0-7.3,5.9-13.2,13.2-13.2c3.8,0,7.2,1.6,9.6,4.2c3-0.6,5.8-1.7,8.4-3.2c-1,3.1-3.1,5.7-5.8,7.3 c2.7-0.3,5.2-1,7.6-2.1C66.5,18.7,64.2,21,61.6,22.9z M48.3,17.7c-1.8,0-3.3,1.5-3.3,3.3s1.5,3.3,3.3,3.3c1.8,0,3.3-1.5,3.3-3.3 S50.1,17.7,48.3,17.7z"
-                fill="#BCBEC0"></path>
-            </g></svg>
- 				
- 				tweet</a>
- 				
- 				
- 				
- 					
- 		
- 		
- 				<a class="greensock" target="_blank" href="http://www.facebook.com/sharer.php?s=100&p[title]=Check out designer My Poor Brain&p[summary]=My Poor Brain&p[url]=https://mypoorbrain.com/">
-
-<!--
-
- 				<a target="_blank" href="http://www.facebook.com/sharer.php?s=100&p%5Btitle%5D=My+Poor+Brain+-+Brain+powered+graphics+fun&p%5Burl%5D=http://www.mypoorbrain.com&p%5Bimages%5D%5B0%5D=http://www.mypoorbrain.com/wp-content/themes/mpb/images/logo.png&p%5Bsummary%5D=Brain+powered+graphics+fun">
--->
- 				
- 				<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 viewBox="0 0 72 72" enable-background="new 0 0 72 72" xml:space="preserve">
-<g id="share_post">
-	<g>
-		<path fill="#BCBEC0" d="M28.1,69.3V38.1h-8.3V26.8h8.3c0,0,0-4.6,0-9.6c0-7.6,4.9-14.5,16.1-14.5c4.6,0,7.9,0.4,7.9,0.4l-0.3,10.5
-			c0,0-3.4,0-7.2,0c-4.1,0-4.7,1.9-4.7,5c0,2.5,0-5.2,0,8.2h12.2l-0.5,11.3H40v31.3H28.1z"/>
-	</g>
-</g>
-</svg>
- 				
- 				
- 				post</a>
-
-
- 
- 				<a class="greensock" target="_blank" href="mailto:?subject=Check out designer My Poor Brain&amp;body=https://mypoorbrain.com/">
- 				
- 				
- 				
- 				 				<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 viewBox="0 0 72 72" enable-background="new 0 0 72 72" xml:space="preserve">
-
-			<g id="share_share">
-                <g>
-                    <polygon fill="#BCBEC0" points=
-                    "66.8,14.9 5.3,14.9 36,37.9"></polygon>
-                    <path d=
-                    "M36,43.9c-0.6,0-1.3-0.2-1.8-0.6l-32.1-24v33.5c0,2.4,1.9,4.3,4.3,4.3h59.3c2.4,0,4.3-1.9,4.3-4.3V19.3 L37.8,43.3C37.3,43.7,36.6,43.9,36,43.9z"
-                    fill="#BCBEC0"></path>
-                </g>
-            </g></svg>
- 				 				
- 				 				
- 				
- 				
- 				
- 				
- 				share</a>
- 				
- 				<span class="justify"></span>
-					
-		</div>
-
-		<div class="small-12 columns mobile-footer">
-		
-
-		 <ul>
-		        		       
-		        <li>
-		            <a class="replace" href="mailto:tim@mypoorbrain.com" id="btn-email"
-		            target="_top"><svg version="1.1" viewbox="0 0 72 72" x="0px" xmlns=
-		            "http://www.w3.org/2000/svg" y="0px">
-		            <g id="social_1">
-		                <g>
-		                    <polygon fill="#FFFFFF" points=
-		                    "66.8,14.9 5.3,14.9 36,37.9"></polygon>
-		                    <path d=
-		                    "M36,43.9c-0.6,0-1.3-0.2-1.8-0.6l-32.1-24v33.5c0,2.4,1.9,4.3,4.3,4.3h59.3c2.4,0,4.3-1.9,4.3-4.3V19.3 L37.8,43.3C37.3,43.7,36.6,43.9,36,43.9z"
-		                    fill="#FFFFFF"></path>
-		                </g>
-		            </g></svg>Email MPB</a>
-		        </li>
-		        
-		        <li>
-		            <a class="replace" href="http://twitter.com/mypoorbrain" id=
-		            "btn-twitter" target="_blank"><svg version="1.1" viewbox=
-		            "0 0 72 72" x="0px" xmlns="http://www.w3.org/2000/svg" y="0px">
-		            <g id="social_3">
-		                <path d=
-		                "M61.6,22.9c0,0.6,0,1.1,0,1.7C61.7,42,48.4,62.2,24,62.2c-7.5,0-14.4-2.2-20.3-5.9c1,0.1,2.1,0.2,3.2,0.2 c6.2,0,11.9-2.1,16.4-5.7c-5.8-0.1-10.7-3.9-12.4-9.2c0.8,0.2,1.6,0.2,2.5,0.2c1.2,0,2.4-0.2,3.5-0.5c-6-1.2-10.6-6.6-10.6-13 c0-0.1,0-0.1,0-0.2c1.8,1,3.8,1.6,6,1.7c-3.5-2.4-5.9-6.4-5.9-11c0-2.4,0.6-4.7,1.8-6.6c6.5,8,16.3,13.3,27.3,13.8 c-0.2-1-0.3-2-0.3-3c0-7.3,5.9-13.2,13.2-13.2c3.8,0,7.2,1.6,9.6,4.2c3-0.6,5.8-1.7,8.4-3.2c-1,3.1-3.1,5.7-5.8,7.3 c2.7-0.3,5.2-1,7.6-2.1C66.5,18.7,64.2,21,61.6,22.9z M48.3,17.7c-1.8,0-3.3,1.5-3.3,3.3s1.5,3.3,3.3,3.3c1.8,0,3.3-1.5,3.3-3.3 S50.1,17.7,48.3,17.7z"
-		                fill="#FFFFFF"></path>
-		            </g></svg>Follow MPB</a>
-		        </li>
-
-
-		    </ul>		
-		
-		</div>
-		
-
-		<div class="large-12 medium-12 small-12 columns copyright">
-
- 				&copy; 2022 Design &amp; build by Tim Smith &amp; <a target="_blank" href="http://www.hamblyfreeman.com">Hambly Freeman</a>.
-					
-		</div>
-		
-	</div>		
-	
-		
-
-</footer>	
-		
-</div><!-- #page -->
-
-
-<script type='text/javascript' src='https://mypoorbrain.com/wp-content/themes/mpb16/foundation/js/foundation.min.js?ver=1' id='hamblyfreeman-foundation-js-js'></script>
-<script type='text/javascript' src='https://mypoorbrain.com/wp-content/themes/mpb16/foundation/js/vendor/modernizr.js?ver=1' id='hamblyfreeman-foundation-modernizr-js-js'></script>
-<script type='text/javascript' src='https://mypoorbrain.com/wp-content/themes/mpb16/foundation/js/vendor/what-input.min.js?ver=1' id='hamblyfreeman-foundation-what-input-js-js'></script>
-<script type='text/javascript' src='https://mypoorbrain.com/wp-content/themes/mpb16/js/greensock-js/src/minified/TweenMax.min.js?ver=1' id='hamblyfreeman-foundation-greensock-js-js'></script>
-<script type='text/javascript' src='https://mypoorbrain.com/wp-content/themes/mpb16/js/greensock-js/src/minified/plugins/DrawSVGPlugin.min.js?ver=1' id='hamblyfreeman-foundation-greensock-draw-js-js'></script>
-<script type='text/javascript' src='https://mypoorbrain.com/wp-content/themes/mpb16/js/lazyload/jquery.lazyload.min.js?ver=1' id='hamblyfreeman-foundation-lazyload-js-js'></script>
-<script type='text/javascript' src='https://mypoorbrain.com/wp-content/themes/mpb16/js/validation/dist/jquery.validate.js?ver=1' id='hamblyfreeman-validation-js-js'></script>
-<script type='text/javascript' src='https://mypoorbrain.com/wp-content/themes/mpb16/js/validation/dist/additional-methods.js?ver=1' id='hamblyfreeman-validation-methods-js-js'></script>
-<script type='text/javascript' src='https://mypoorbrain.com/wp-content/themes/mpb16/js/isotope.pkgd.js?ver=1' id='hamblyfreeman-cookie-js-js'></script>
-<script type='text/javascript' src='https://mypoorbrain.com/wp-content/themes/mpb16/js/jquery.placeholder.min.js?ver=1649320156' id='hamblyfreeman-placeholder-js-js'></script>
-<script type='text/javascript' src='https://mypoorbrain.com/wp-content/themes/mpb16/js/scripts.js?ver=1649320156' id='scripts-js-js'></script>
-<script type='text/javascript' src='https://mypoorbrain.com/wp-includes/js/wp-embed.min.js?ver=5.8.4' id='wp-embed-js'></script>
-	
-
-	
-	
+    <!-- Layout -->
+    <div class="layout">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <h3>Favorites</h3>
+            <a href="#">About Me</a>
+            <a href="#">Skills</a>
+            <a href="#">Projects</a>
+            <a href="#">Contact</a>
+            
+            <h3>Locations</h3>
+            <a href="#">My Work</a>
+            <a href="#">Archived</a>
+            <a href="#">External</a>
+        </div>
+        
+        <!-- Content Area -->
+        <div class="content-area">
+            <!-- Example items as icons -->
+            <div class="item">
+                <div class="item-icon"><i class="fas fa-gamepad"></i></div>
+                <span>Adventure Quest</span>
+            </div>
+            <div class="item">
+                <div class="item-icon"><i class="fas fa-chess-knight"></i></div>
+                <span>Battle Arena</span>
+            </div>
+            <div class="item">
+                <div class="item-icon"><i class="fas fa-brain"></i></div>
+                <span>Logic Puzzler</span>
+            </div>
+            <div class="item">
+                <div class="item-icon"><i class="fas fa-file-code"></i></div>
+                <span>Source Code</span>
+            </div>
+            <div class="item">
+                <div class="item-icon"><i class="fas fa-file-alt"></i></div>
+                <span>Resume</span>
+            </div>
+            <div class="item">
+                <div class="item-icon"><i class="fas fa-images"></i></div>
+                <span>Art Assets</span>
+            </div>
+            <div class="item">
+                <div class="item-icon"><i class="fas fa-folder"></i></div>
+                <span>Design Docs</span>
+            </div>
+            <!-- Add more items as needed -->
+        </div>
+    </div>
+</div>
 </body>
 </html>
