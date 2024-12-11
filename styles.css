@@ -1,7 +1,7 @@
 /* Color references based on macOS dark mode */
 :root {
-  --window-bg: rgba(28, 28, 30, 0.7);
-  --toolbar-bg: rgba(44, 44, 46, 0.9); /* Darkened toolbar background */
+  --window-bg: rgba(28, 28, 30, 0.85);
+  --toolbar-bg: rgba(44, 44, 46, 0.85);
   --divider-color: rgba(58, 58, 60, 0.7);
   --text-color: #ffffff;
   --muted-text: #a1a1a6;
@@ -29,7 +29,7 @@ body {
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  backdrop-filter: blur(10px); /* Background blur for the entire window */
+  backdrop-filter: blur(12px); /* Background blur for the entire window */
 }
 
 /* Window Container */
@@ -42,8 +42,8 @@ body {
   height: 80vh;
   border-radius: var(--border-radius);
   overflow: hidden;
-  box-shadow: 0 0 40px rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(20px); /* Glass-like effect */
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(25px); /* Glass-like effect */
 }
 
 /* Toolbar */
@@ -52,9 +52,9 @@ body {
   align-items: center;
   background: var(--toolbar-bg);
   height: var(--toolbar-height);
-  padding: 0 8px;
+  padding: 0 12px;
   border-bottom: 1px solid var(--divider-color);
-  backdrop-filter: blur(15px); /* Adds macOS-style translucency */
+  backdrop-filter: blur(20px); /* Adds macOS-style translucency */
 }
 
 .toolbar-left {
@@ -67,14 +67,15 @@ body {
 .traffic-lights {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
   margin-right: 12px;
 }
 
 .traffic-light {
-  width: 12px;
-  height: 12px;
+  width: 14px;
+  height: 14px;
   border-radius: 50%;
+  border: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 .close {
@@ -102,7 +103,7 @@ body {
 .toolbar-right {
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 6px;
 }
 
 .segmented-control {
@@ -116,10 +117,10 @@ body {
   background: transparent;
   border: none;
   color: var(--muted-text);
-  padding: 0 10px;
+  padding: 0 12px;
   display: flex;
   align-items: center;
-  height: 24px;
+  height: 28px;
   cursor: pointer;
   transition: background 0.2s, color 0.2s;
 }
@@ -132,7 +133,7 @@ body {
 /* Top Menu */
 .top-menu-container {
   position: relative;
-  width: 100%; /* Ensure full width */
+  width: 100%;
 }
 
 .menu-toggle {
@@ -140,7 +141,7 @@ body {
   background: var(--toolbar-bg);
   color: var(--text-color);
   border: none;
-  padding: 8px 12px;
+  padding: 10px 14px;
   font-size: 1rem;
   cursor: pointer;
   border-radius: var(--border-radius);
@@ -150,20 +151,20 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: rgba(34, 34, 36, 0.9); /* Darker background for the top menu */
-  padding: 8px 16px;
+  background: rgba(34, 34, 36, 0.85); /* Darker background for the top menu */
+  padding: 10px 20px;
   border-bottom: 1px solid var(--divider-color);
-  gap: 20px;
+  gap: 24px;
   flex-wrap: wrap;
-  backdrop-filter: blur(15px); /* Glass-like effect for the top menu */
-  width: 100%; /* Ensure it takes the full width */
+  backdrop-filter: blur(20px); /* Glass-like effect for the top menu */
+  width: 100%;
 }
 
 .top-menu a {
   color: var(--text-color);
   text-decoration: none;
   font-size: 0.9rem;
-  padding: 8px 12px;
+  padding: 10px 14px;
   border-radius: var(--border-radius);
   transition: background 0.2s, color 0.2s;
 }
@@ -178,10 +179,10 @@ body {
   .top-menu {
     display: none;
     flex-direction: column;
-    gap: 10px;
+    gap: 12px;
     background: var(--toolbar-bg);
     border-radius: var(--border-radius);
-    padding: 10px;
+    padding: 12px;
   }
 
   .menu-toggle {
@@ -198,13 +199,13 @@ body {
   flex: 1;
   background: transparent;
   overflow-y: auto;
-  padding: 10px;
+  padding: 14px;
   display: flex;
   flex-wrap: wrap;
-  gap: 20px;
+  gap: 24px;
   align-content: flex-start;
   justify-content: flex-start;
-  backdrop-filter: blur(10px); /* Adds subtle translucency */
+  backdrop-filter: blur(10px);
 }
 
 /* Items in icon view */
@@ -216,7 +217,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 4px;
+  gap: 6px;
   cursor: default;
 }
 
