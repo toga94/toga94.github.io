@@ -12,15 +12,16 @@
     />
     <style>
       :root {
-        --window-bg: rgba(28, 28, 30, 0.85);
-        --toolbar-bg: rgba(44, 44, 46, 0.85);
-        --divider-color: rgba(58, 58, 60, 0.7);
+        --window-bg: #1c1c1e;
+        --toolbar-bg: rgba(30, 30, 30, 1);
+        --divider-color: rgba(255, 255, 255, 0.1);
         --text-color: #ffffff;
-        --muted-text: #a1a1a6;
+        --muted-text: rgba(255, 255, 255, 0.7);
         --accent-color: #0a84ff;
         --font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue",
           Helvetica, Arial, sans-serif;
-        --border-radius: 6px;
+        --border-radius: 12px;
+        --toolbar-height: 60px;
       }
 
       body {
@@ -38,20 +39,20 @@
         display: flex;
         flex-direction: column;
         width: 90%;
-        max-width: 1200px;
-        height: 80vh;
+        max-width: 1000px;
+        height: 70vh;
         background: var(--window-bg);
         border-radius: var(--border-radius);
         overflow: hidden;
-        box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
       }
 
       .toolbar {
         display: flex;
         align-items: center;
         background: var(--toolbar-bg);
-        height: 50px;
-        padding: 0 16px;
+        height: var(--toolbar-height);
+        padding: 0 20px;
         border-bottom: 1px solid var(--divider-color);
       }
 
@@ -59,6 +60,7 @@
         flex: 1;
         text-align: center;
         font-size: 1rem;
+        font-weight: 500;
         color: var(--muted-text);
       }
 
@@ -181,7 +183,7 @@
           <div class="traffic-light minimize"></div>
           <div class="traffic-light fullscreen"></div>
         </div>
-        <div class="toolbar-title">macOS Finder Inspired</div>
+        <div class="toolbar-title">Window Title (Active)</div>
       </div>
 
       <div class="top-menu">
