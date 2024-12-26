@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>macOS Finder Inspired</title>
     <link rel="stylesheet" href="styles.css" />
     <script src="https://cdn.jsdelivr.net/npm/vue@3/dist/vue.global.min.js"></script>
@@ -11,166 +11,186 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
     />
     <style>
-      /* Example styling — adapt as needed */
+      :root {
+        --window-bg: rgba(28, 28, 30, 0.85);
+        --toolbar-bg: rgba(44, 44, 46, 0.85);
+        --divider-color: rgba(58, 58, 60, 0.7);
+        --text-color: #ffffff;
+        --muted-text: #a1a1a6;
+        --accent-color: #0a84ff;
+        --font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue",
+          Helvetica, Arial, sans-serif;
+        --border-radius: 6px;
+      }
 
       body {
+        background: var(--window-bg);
+        font-family: var(--font-family);
+        color: var(--text-color);
         margin: 0;
-        font-family: sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
       }
 
       .finder-window {
-        width: 80%;
-        margin: 2rem auto;
-        border: 1px solid #ccc;
-        border-radius: 8px;
+        display: flex;
+        flex-direction: column;
+        width: 90%;
+        max-width: 1200px;
+        height: 80vh;
+        background: var(--window-bg);
+        border-radius: var(--border-radius);
         overflow: hidden;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
       }
 
-      /* Toolbar */
       .toolbar {
         display: flex;
         align-items: center;
-        background-color: #f2f2f2;
-        padding: 0.5rem;
-      }
-
-      .traffic-lights {
-        display: flex;
-        gap: 0.5rem;
-        margin-right: 1rem;
-      }
-
-      .traffic-light {
-        width: 15px;
-        height: 15px;
-        border-radius: 50%;
-      }
-      .traffic-light.close {
-        background-color: #ff5f57;
-      }
-      .traffic-light.minimize {
-        background-color: #ffbd2e;
-      }
-      .traffic-light.fullscreen {
-        background-color: #28c840;
+        background: var(--toolbar-bg);
+        height: 50px;
+        padding: 0 16px;
+        border-bottom: 1px solid var(--divider-color);
       }
 
       .toolbar-title {
         flex: 1;
         text-align: center;
-        font-weight: bold;
+        font-size: 1rem;
+        color: var(--muted-text);
       }
 
-      .segmented-control button {
-        background: none;
-        border: none;
-        margin: 0 4px;
-        cursor: pointer;
+      .traffic-lights {
+        display: flex;
+        gap: 8px;
       }
 
-      /* Top Menu */
+      .traffic-light {
+        width: 14px;
+        height: 14px;
+        border-radius: 50%;
+      }
+
+      .traffic-light.close {
+        background: #ff605c;
+      }
+
+      .traffic-light.minimize {
+        background: #ffbd44;
+      }
+
+      .traffic-light.fullscreen {
+        background: #00ca4e;
+      }
+
       .top-menu {
         display: flex;
         gap: 1rem;
         padding: 0.5rem 1rem;
-        background-color: #fafafa;
-        border-bottom: 1px solid #ccc;
+        background-color: var(--toolbar-bg);
+        border-bottom: 1px solid var(--divider-color);
       }
 
       .top-menu a {
         text-decoration: none;
-        color: #333;
+        color: var(--text-color);
+        font-size: 0.9rem;
         cursor: pointer;
       }
 
-      /* Content Area split into two panes */
+      .top-menu a:hover {
+        color: var(--accent-color);
+      }
+
       .content-area {
-        display: flex;
-        height: 400px; /* example fixed height, can be adjusted */
-      }
-
-      .left-pane {
         flex: 1;
-        border-right: 1px solid #ccc;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 24px;
+        align-content: flex-start;
+        justify-content: flex-start;
+        padding: 16px;
         overflow-y: auto;
       }
 
-      .right-pane {
-        flex: 1;
-        padding: 1rem;
-        overflow-y: auto;
-      }
-
-      /* Items in the left pane */
-      .item {
+      .card {
+        background: var(--toolbar-bg);
+        border: 1px solid var(--divider-color);
+        border-radius: var(--border-radius);
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        width: calc(33.33% - 16px);
+        margin: 8px;
         display: flex;
-        align-items: center;
+        flex-direction: column;
+        overflow: hidden;
+        text-align: center;
         cursor: pointer;
-        padding: 0.5rem 1rem;
+        text-decoration: none;
+        color: inherit;
+        transition: transform 0.2s, box-shadow 0.2s;
       }
 
-      .item:hover {
-        background-color: #f0f0f0;
+      .card:hover {
+        transform: scale(1.05);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
       }
 
-      .item-icon {
-        margin-right: 0.5rem;
+      .card:focus {
+        outline: 2px solid var(--accent-color);
+      }
+
+      .card-image img {
+        width: 100%;
+        height: 150px;
+        object-fit: cover;
+      }
+
+      .card-title {
+        font-size: 1rem;
+        font-weight: bold;
+        margin: 8px 0;
+      }
+
+      .card-description {
+        font-size: 0.85rem;
+        color: var(--muted-text);
+        padding: 0 10px 10px;
       }
     </style>
   </head>
   <body>
     <div id="app" class="finder-window">
-      <!-- Toolbar -->
       <div class="toolbar">
         <div class="traffic-lights">
           <div class="traffic-light close"></div>
           <div class="traffic-light minimize"></div>
           <div class="traffic-light fullscreen"></div>
         </div>
-        <div class="toolbar-title">{{ title }}</div>
-        <div class="segmented-control">
-          <button v-for="view in views" :key="view" @click="setView(view)">
-            <i :class="icons[view]"></i>
-          </button>
-        </div>
+        <div class="toolbar-title">macOS Finder Inspired</div>
       </div>
 
-      <!-- Top Menu -->
       <div class="top-menu">
         <a v-for="menu in menus" :key="menu" @click="setContent(menu)">
           {{ menu }}
         </a>
       </div>
 
-      <!-- Content Area (split into two panes) -->
       <div class="content-area">
-        <!-- Left pane: list current items -->
-        <div class="left-pane">
-          <div
-            v-for="item in currentItems"
-            :key="item.name"
-            class="item"
-            @click="selectItem(item)"
-          >
-            <div class="item-icon"><i :class="item.icon"></i></div>
-            <span>{{ item.name }}</span>
+        <a
+          class="card"
+          v-for="item in items"
+          :key="item.name"
+          @click="selectItem(item)"
+          href="#"
+        >
+          <div class="card-image">
+            <img :src="item.image" :alt="item.name" />
           </div>
-        </div>
-
-        <!-- Right pane: review or details about the selected item -->
-        <div class="right-pane">
-          <h2>Review</h2>
-          <div v-if="selectedItem">
-            <h3>{{ selectedItem.name }}</h3>
-            <p>
-              <!-- You can customize what details to show here -->
-              This is some detail about <strong>{{ selectedItem.name }}</strong>.
-            </p>
-          </div>
-          <div v-else>
-            <p>Select an item from the left to see the review here.</p>
-          </div>
-        </div>
+          <h3 class="card-title">{{ item.name }}</h3>
+          <p class="card-description">{{ item.description }}</p>
+        </a>
       </div>
     </div>
 
@@ -178,80 +198,80 @@
       const app = Vue.createApp({
         data() {
           return {
-            title: "Togrul's Portfolio",
-            views: ["icon", "list", "column", "gallery"],
-            icons: {
-              icon: "fas fa-th-large",
-              list: "fas fa-list",
-              column: "fas fa-columns",
-              gallery: "fas fa-image",
-            },
-            menus: [
-              "About Me",
-              "Skills",
-              "Projects",
-              "Contact",
-              "My Work",
-              "Archived",
-              "External",
-            ],
+            menus: ["Home", "About", "Projects", "Contact"],
             items: [
-              { name: "Adventure Quest", icon: "fas fa-gamepad" },
-              { name: "Portfolio Site", icon: "fas fa-laptop-code" },
-              { name: "Resume", icon: "fas fa-file-alt" },
+              {
+                name: "Home Item 1",
+                image: "https://via.placeholder.com/150",
+                description: "Description for Home Item 1",
+              },
+              {
+                name: "Home Item 2",
+                image: "https://via.placeholder.com/150",
+                description: "Description for Home Item 2",
+              },
             ],
-            content: {
-              "About Me": [
-                { name: "Personal Info", icon: "fas fa-user" },
-                { name: "Hobbies", icon: "fas fa-heart" },
-              ],
-              Skills: [
-                { name: "JavaScript", icon: "fas fa-code" },
-                { name: "Vue.js", icon: "fas fa-vuejs" },
-              ],
-              Projects: [
-                { name: "Game Project", icon: "fas fa-gamepad" },
-                { name: "Website", icon: "fas fa-globe" },
-              ],
-              Contact: [
-                { name: "Email", icon: "fas fa-envelope" },
-                { name: "Phone", icon: "fas fa-phone" },
-              ],
-              "My Work": [
-                { name: "Design", icon: "fas fa-paint-brush" },
-                { name: "Development", icon: "fas fa-laptop-code" },
-              ],
-              Archived: [
-                { name: "Old Project", icon: "fas fa-archive" },
-                { name: "Notes", icon: "fas fa-sticky-note" },
-              ],
-              External: [
-                { name: "LinkedIn", icon: "fas fa-link" },
-                { name: "GitHub", icon: "fas fa-github" },
-              ],
-            },
-            currentItems: [],
-            selectedItem: null, // new property to track selected item
           };
         },
         methods: {
-          setView(view) {
-            console.log(`Switched to ${view} view`);
-          },
           setContent(menu) {
-            // Load the items for the selected menu
-            this.currentItems = this.content[menu] || [];
-            // Reset the selected item when switching menus
-            this.selectedItem = null;
+            if (menu === "Home") {
+              this.items = [
+                {
+                  name: "Home Item 1",
+                  image: "https://via.placeholder.com/150",
+                  description: "Description for Home Item 1",
+                },
+                {
+                  name: "Home Item 2",
+                  image: "https://via.placeholder.com/150",
+                  description: "Description for Home Item 2",
+                },
+              ];
+            } else if (menu === "About") {
+              this.items = [
+                {
+                  name: "About Item 1",
+                  image: "https://via.placeholder.com/150",
+                  description: "Description for About Item 1",
+                },
+                {
+                  name: "About Item 2",
+                  image: "https://via.placeholder.com/150",
+                  description: "Description for About Item 2",
+                },
+              ];
+            } else if (menu === "Projects") {
+              this.items = [
+                {
+                  name: "Project Item 1",
+                  image: "https://via.placeholder.com/150",
+                  description: "Description for Project Item 1",
+                },
+                {
+                  name: "Project Item 2",
+                  image: "https://via.placeholder.com/150",
+                  description: "Description for Project Item 2",
+                },
+              ];
+            } else if (menu === "Contact") {
+              this.items = [
+                {
+                  name: "Contact Item 1",
+                  image: "https://via.placeholder.com/150",
+                  description: "Description for Contact Item 1",
+                },
+                {
+                  name: "Contact Item 2",
+                  image: "https://via.placeholder.com/150",
+                  description: "Description for Contact Item 2",
+                },
+              ];
+            }
           },
           selectItem(item) {
-            // Set the clicked item as selected
-            this.selectedItem = item;
+            alert(`Selected: ${item.name}`);
           },
-        },
-        mounted() {
-          // Initialize the items by default to "About Me" content
-          this.currentItems = this.content["About Me"];
         },
       });
 
