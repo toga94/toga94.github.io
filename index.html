@@ -108,7 +108,7 @@
         flex: 1;
         display: flex;
         flex-wrap: wrap;
-        gap: 24px;
+        gap: 16px;
         align-content: flex-start;
         justify-content: flex-start;
         padding: 16px;
@@ -157,6 +157,19 @@
         font-size: 0.85rem;
         color: var(--muted-text);
         padding: 0 10px 10px;
+      }
+
+      /* Responsive Design */
+      @media (max-width: 768px) {
+        .card {
+          width: calc(50% - 16px);
+        }
+      }
+
+      @media (max-width: 480px) {
+        .card {
+          width: 100%;
+        }
       }
     </style>
   </head>
