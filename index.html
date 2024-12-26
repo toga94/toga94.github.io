@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>macOS Finder Inspired</title>
     <link rel="stylesheet" href="styles.css" />
     <script src="https://cdn.jsdelivr.net/npm/vue@3/dist/vue.global.min.js"></script>
@@ -10,6 +10,113 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
     />
+    <style>
+      /* Example styling — adapt as needed */
+
+      body {
+        margin: 0;
+        font-family: sans-serif;
+      }
+
+      .finder-window {
+        width: 80%;
+        margin: 2rem auto;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        overflow: hidden;
+      }
+
+      /* Toolbar */
+      .toolbar {
+        display: flex;
+        align-items: center;
+        background-color: #f2f2f2;
+        padding: 0.5rem;
+      }
+
+      .traffic-lights {
+        display: flex;
+        gap: 0.5rem;
+        margin-right: 1rem;
+      }
+
+      .traffic-light {
+        width: 15px;
+        height: 15px;
+        border-radius: 50%;
+      }
+      .traffic-light.close {
+        background-color: #ff5f57;
+      }
+      .traffic-light.minimize {
+        background-color: #ffbd2e;
+      }
+      .traffic-light.fullscreen {
+        background-color: #28c840;
+      }
+
+      .toolbar-title {
+        flex: 1;
+        text-align: center;
+        font-weight: bold;
+      }
+
+      .segmented-control button {
+        background: none;
+        border: none;
+        margin: 0 4px;
+        cursor: pointer;
+      }
+
+      /* Top Menu */
+      .top-menu {
+        display: flex;
+        gap: 1rem;
+        padding: 0.5rem 1rem;
+        background-color: #fafafa;
+        border-bottom: 1px solid #ccc;
+      }
+
+      .top-menu a {
+        text-decoration: none;
+        color: #333;
+        cursor: pointer;
+      }
+
+      /* Content Area split into two panes */
+      .content-area {
+        display: flex;
+        height: 400px; /* example fixed height, can be adjusted */
+      }
+
+      .left-pane {
+        flex: 1;
+        border-right: 1px solid #ccc;
+        overflow-y: auto;
+      }
+
+      .right-pane {
+        flex: 1;
+        padding: 1rem;
+        overflow-y: auto;
+      }
+
+      /* Items in the left pane */
+      .item {
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        padding: 0.5rem 1rem;
+      }
+
+      .item:hover {
+        background-color: #f0f0f0;
+      }
+
+      .item-icon {
+        margin-right: 0.5rem;
+      }
+    </style>
   </head>
   <body>
     <div id="app" class="finder-window">
@@ -30,16 +137,39 @@
 
       <!-- Top Menu -->
       <div class="top-menu">
-        <a v-for="menu in menus" :key="menu" @click="setContent(menu)"
-          >{{ menu }}</a
-        >
+        <a v-for="menu in menus" :key="menu" @click="setContent(menu)">
+          {{ menu }}
+        </a>
       </div>
 
-      <!-- Content Area -->
+      <!-- Content Area (split into two panes) -->
       <div class="content-area">
-        <div v-for="item in currentItems" :key="item.name" class="item">
-          <div class="item-icon"><i :class="item.icon"></i></div>
-          <span>{{ item.name }}</span>
+        <!-- Left pane: list current items -->
+        <div class="left-pane">
+          <div
+            v-for="item in currentItems"
+            :key="item.name"
+            class="item"
+            @click="selectItem(item)"
+          >
+            <div class="item-icon"><i :class="item.icon"></i></div>
+            <span>{{ item.name }}</span>
+          </div>
+        </div>
+
+        <!-- Right pane: review or details about the selected item -->
+        <div class="right-pane">
+          <h2>Review</h2>
+          <div v-if="selectedItem">
+            <h3>{{ selectedItem.name }}</h3>
+            <p>
+              <!-- You can customize what details to show here -->
+              This is some detail about <strong>{{ selectedItem.name }}</strong>.
+            </p>
+          </div>
+          <div v-else>
+            <p>Select an item from the left to see the review here.</p>
+          </div>
         </div>
       </div>
     </div>
@@ -101,6 +231,7 @@
               ],
             },
             currentItems: [],
+            selectedItem: null, // new property to track selected item
           };
         },
         methods: {
@@ -108,10 +239,18 @@
             console.log(`Switched to ${view} view`);
           },
           setContent(menu) {
+            // Load the items for the selected menu
             this.currentItems = this.content[menu] || [];
+            // Reset the selected item when switching menus
+            this.selectedItem = null;
+          },
+          selectItem(item) {
+            // Set the clicked item as selected
+            this.selectedItem = item;
           },
         },
         mounted() {
+          // Initialize the items by default to "About Me" content
           this.currentItems = this.content["About Me"];
         },
       });
