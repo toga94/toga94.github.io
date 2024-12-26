@@ -1,7 +1,7 @@
 /* Color references based on macOS dark mode */
 :root {
   --window-bg: rgba(28, 28, 30, 0.85);
-  --toolbar-bg: rgba(44, 44, 46, 0.85);
+  --toolbar-bg: rgba(30, 30, 30, 1);
   --divider-color: rgba(58, 58, 60, 0.7);
   --text-color: #ffffff;
   --muted-text: #a1a1a6;
