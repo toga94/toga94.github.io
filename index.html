@@ -11,84 +11,8 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
     />
     <style>
-      :root {
-        --window-bg: #1c1c1e;
-        --toolbar-bg: rgba(30, 30, 30, 1);
-        --divider-color: rgba(255, 255, 255, 0.1);
-        --text-color: #ffffff;
-        --muted-text: rgba(255, 255, 255, 0.7);
-        --accent-color: #0a84ff;
-        --font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue",
-          Helvetica, Arial, sans-serif;
-        --border-radius: 12px;
-        --toolbar-height: 46px;
-      }
-
-      body {
-        background: var(--window-bg);
-        font-family: var(--font-family);
-        color: var(--text-color);
-        margin: 0;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-      }
-
-      .finder-window {
-        display: flex;
-        flex-direction: column;
-        width: 90%;
-        max-width: 1000px;
-        height: 90vh;
-        background: var(--window-bg);
-        border-radius: var(--border-radius);
-        overflow: hidden;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
-      }
-
-      .toolbar {
-        display: flex;
-        align-items: center;
-        background: var(--toolbar-bg);
-        height: var(--toolbar-height);
-        padding: 0 20px;
-        border-bottom: 1px solid var(--divider-color);
-      }
-
-      .toolbar-title {
-        flex: 1;
-        text-align: center;
-        font-size: 0.9rem;
-        font-weight: 500;
-        color: var(--muted-text);
-      }
-
-      .traffic-lights {
-        display: flex;
-        gap: 8px;
-      }
-
-      .traffic-light {
-        width: 14px;
-        height: 14px;
-        border-radius: 50%;
-      }
-
-      .traffic-light.close {
-        background: #ff605c;
-      }
-
-      .traffic-light.minimize {
-        background: #ffbd44;
-      }
-
-      .traffic-light.fullscreen {
-        background: #00ca4e;
-      }
-
-      /* Top Menu */
-      .top-menu {
+      /* Tabbed Menu Styles */
+      .tab-menu {
         display: flex;
         justify-content: center;
         align-items: center;
@@ -105,30 +29,53 @@
         backdrop-filter: blur(20px); /* Glass-like effect for the top menu */
         width: 100%;
       }
-
-      .top-menu a {
+      .body {
+        background: linear-gradient(
+          135deg,
+          #2b2e4a,
+          #0f3460
+        ); /* Gradient background */
+        font-family: var(--font-family);
         color: var(--text-color);
-        text-decoration: none;
-        font-size: 0.8rem; /* Reduced font size */
-        padding: 6px 10px; /* Reduced padding */
+        margin: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+      .tab-menu button {
+        background: transparent;
+        color: var(--text-color);
+        font-size: 0.9rem;
+        border: none;
+        padding: 8px 16px;
         border-radius: var(--border-radius);
+        cursor: pointer;
         transition: background 0.2s, color 0.2s;
       }
 
-      .top-menu a:hover {
+      .tab-menu button:hover {
         background: var(--accent-color);
         color: #ffffff;
       }
+
+      .tab-menu button.active {
+        background: var(--accent-color);
+        color: #ffffff;
+        font-weight: bold;
+      }
+
+      /* Content Area Styles */
       .content-area {
         flex: 1;
         display: flex;
         flex-wrap: wrap;
-        gap: 4px;
+        gap: 16px;
+        padding: 16px;
         background: rgba(70, 73, 73, 0.85);
+        overflow-y: auto;
         align-content: flex-start;
         justify-content: flex-start;
-        padding: 16px;
-        overflow-y: auto;
       }
 
       .card {
@@ -136,8 +83,7 @@
         border: 1px solid var(--divider-color);
         border-radius: var(--border-radius);
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        width: calc(25% - 4px);
-        margin: 4px;
+        width: calc(25% - 16px);
         display: flex;
         flex-direction: column;
         overflow: hidden;
@@ -151,10 +97,6 @@
       .card:hover {
         transform: scale(1.05);
         box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
-      }
-
-      .card:focus {
-        outline: 2px solid var(--accent-color);
       }
 
       .card-image img {
@@ -174,52 +116,46 @@
         color: var(--muted-text);
         padding: 0 10px 10px;
       }
-
-      /* Responsive Design */
-      @media (max-width: 768px) {
-        .card {
-          width: calc(50% - 16px);
-        }
-      }
-
-      @media (max-width: 480px) {
-        .card {
-          width: 100%;
-        }
-      }
     </style>
   </head>
   <body>
     <div id="app" class="finder-window">
+      <!-- Toolbar -->
       <div class="toolbar">
         <div class="traffic-lights">
           <div class="traffic-light close"></div>
           <div class="traffic-light minimize"></div>
           <div class="traffic-light fullscreen"></div>
         </div>
-        <div class="toolbar-title">Window Title (Active)</div>
+        <div class="toolbar-title">{{ title }}</div>
       </div>
 
-      <div class="top-menu">
-        <a v-for="menu in menus" :key="menu" @click="setContent(menu)">
+      <!-- Tab Menu -->
+      <div class="tab-menu">
+        <button
+          v-for="menu in menus"
+          :key="menu"
+          @click="setContent(menu)"
+          :class="{ active: activeMenu === menu }"
+        >
           {{ menu }}
-        </a>
+        </button>
       </div>
 
+      <!-- Content Area -->
       <div class="content-area">
-        <a
+        <div
           class="card"
-          v-for="item in items"
+          v-for="item in currentItems"
           :key="item.name"
           @click="selectItem(item)"
-          href="#"
         >
           <div class="card-image">
             <img :src="item.image" :alt="item.name" />
           </div>
           <h3 class="card-title">{{ item.name }}</h3>
           <p class="card-description">{{ item.description }}</p>
-        </a>
+        </div>
       </div>
     </div>
 
@@ -227,25 +163,11 @@
       const app = Vue.createApp({
         data() {
           return {
+            title: "macOS Finder Inspired",
+            activeMenu: "Home", // Track active tab
             menus: ["Home", "About", "Projects", "Contact"],
-            items: [
-              {
-                name: "Home Item 1",
-                image: "https://via.placeholder.com/150",
-                description: "Description for Home Item 1",
-              },
-              {
-                name: "Home Item 2",
-                image: "https://via.placeholder.com/150",
-                description: "Description for Home Item 2",
-              },
-            ],
-          };
-        },
-        methods: {
-          setContent(menu) {
-            if (menu === "Home") {
-              this.items = [
+            content: {
+              Home: [
                 {
                   name: "Home Item 1",
                   image: "https://via.placeholder.com/150",
@@ -256,9 +178,8 @@
                   image: "https://via.placeholder.com/150",
                   description: "Description for Home Item 2",
                 },
-              ];
-            } else if (menu === "About") {
-              this.items = [
+              ],
+              About: [
                 {
                   name: "About Item 1",
                   image: "https://via.placeholder.com/150",
@@ -269,9 +190,8 @@
                   image: "https://via.placeholder.com/150",
                   description: "Description for About Item 2",
                 },
-              ];
-            } else if (menu === "Projects") {
-              this.items = [
+              ],
+              Projects: [
                 {
                   name: "Project Item 1",
                   image: "https://via.placeholder.com/150",
@@ -282,9 +202,8 @@
                   image: "https://via.placeholder.com/150",
                   description: "Description for Project Item 2",
                 },
-              ];
-            } else if (menu === "Contact") {
-              this.items = [
+              ],
+              Contact: [
                 {
                   name: "Contact Item 1",
                   image: "https://via.placeholder.com/150",
@@ -295,12 +214,23 @@
                   image: "https://via.placeholder.com/150",
                   description: "Description for Contact Item 2",
                 },
-              ];
-            }
+              ],
+            },
+            currentItems: [],
+          };
+        },
+        methods: {
+          setContent(menu) {
+            this.activeMenu = menu; // Set active tab
+            this.currentItems = this.content[menu] || []; // Update items for selected tab
           },
           selectItem(item) {
             alert(`Selected: ${item.name}`);
           },
+        },
+        mounted() {
+          // Initialize with Home content
+          this.setContent("Home");
         },
       });
 
