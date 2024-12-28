@@ -88,14 +88,6 @@
         color: #fff;
       }
 
-      /* By default, sections are hidden unless they have .visible */
-      .section {
-        display: none;
-      }
-      .section.visible {
-        display: block;
-      }
-
       /* Horizontal scrolling project list */
       .book-list {
         overflow-x: auto;
@@ -154,10 +146,10 @@
   </head>
   <body>
     <!-- 
-      Use a custom-container class that caps width at larger screens 
-      but remains fluid on small screens.
+      VUE APP WRAPPER
+      The id="app" element is where our Vue instance is mounted.
     -->
-    <div class="container custom-container py-4">
+    <div id="app" class="container custom-container py-4">
       <!-- HEADER -->
       <header class="mb-4">
         <!-- Top row: Avatar on the left, Bell on the right -->
@@ -179,7 +171,7 @@
 
         <!-- Greeting -->
         <h2 class="fw-normal">
-          Hey, <span class="highlight">I'm Steve!</span>
+          Hey, <span class="highlight">I'm Toghrul!</span>
         </h2>
         <p class="mb-0 text-secondary" style="font-size: 1rem">
           Check out my game dev projects.
@@ -187,122 +179,114 @@
       </header>
 
       <!-- CATEGORY FILTERS -->
+      <!-- We loop through categoryList in Vue and create buttons -->
       <div class="d-flex gap-2 mb-4 overflow-auto">
-        <!-- "All" is set as active by default -->
-        <button class="category-btn active" data-filter="all">All</button>
-        <button class="category-btn" data-filter="two-d">2D Games</button>
-        <button class="category-btn" data-filter="three-d">3D Games</button>
-        <button class="category-btn" data-filter="concept-art">
-          Concept Art
+        <button
+          v-for="cat in categoryList"
+          :key="cat.id"
+          class="category-btn"
+          :class="{ active: activeCategory === cat.value }"
+          @click="setCategory(cat.value)"
+        >
+          {{ cat.name }}
         </button>
       </div>
 
       <!-- 2D GAMES SECTION -->
-      <div class="section two-d visible mb-4" id="two-d-section">
+      <!-- Show if activeCategory is 'all' or 'two-d' -->
+      <div
+        class="mb-4"
+        v-show="activeCategory === 'all' || activeCategory === 'two-d'"
+      >
         <div class="d-flex justify-content-between align-items-baseline mb-2">
           <h5 class="fw-semibold m-0" style="font-size: 1rem">2D Games</h5>
-          <div class="text-danger" style="font-size: 0.9rem; cursor: pointer">
+          <div
+            class="text-danger"
+            style="font-size: 0.9rem; cursor: pointer"
+            @click="seeAll('two-d')"
+          >
             See all
           </div>
         </div>
         <!-- Project list horizontally scrollable -->
         <div class="book-list">
-          <!-- 2D Project card 1 -->
-          <div class="book-card">
-            <img
-              src="https://via.placeholder.com/120x180/DA2D2D/FFFFFF?text=2D+Action"
-              alt="2D Action Game"
-            />
+          <div
+            class="book-card"
+            v-for="(game, index) in twoDProjects"
+            :key="index"
+          >
+            <img :src="game.img" :alt="game.title" />
             <div class="book-title fw-semibold" style="font-size: 0.9rem">
-              2D Action
+              {{ game.title }}
             </div>
             <div class="book-author text-muted" style="font-size: 0.75rem">
-              Engine: Unity
-            </div>
-          </div>
-          <!-- 2D Project card 2 -->
-          <div class="book-card">
-            <img
-              src="https://via.placeholder.com/120x180/F7C63B/333333?text=2D+Puzzle"
-              alt="2D Puzzle"
-            />
-            <div class="book-title fw-semibold" style="font-size: 0.9rem">
-              2D Puzzle
-            </div>
-            <div class="book-author text-muted" style="font-size: 0.75rem">
-              Engine: Godot
+              Engine: {{ game.engine }}
             </div>
           </div>
         </div>
       </div>
 
       <!-- 3D GAMES SECTION -->
-      <div class="section three-d visible mb-4" id="three-d-section">
+      <!-- Show if activeCategory is 'all' or 'three-d' -->
+      <div
+        class="mb-4"
+        v-show="activeCategory === 'all' || activeCategory === 'three-d'"
+      >
         <div class="d-flex justify-content-between align-items-baseline mb-2">
           <h5 class="fw-semibold m-0" style="font-size: 1rem">3D Games</h5>
-          <div class="text-danger" style="font-size: 0.9rem; cursor: pointer">
+          <div
+            class="text-danger"
+            style="font-size: 0.9rem; cursor: pointer"
+            @click="seeAll('three-d')"
+          >
             See all
           </div>
         </div>
         <div class="book-list">
-          <div class="book-card">
-            <img
-              src="https://via.placeholder.com/120x180/333333/FFFFFF?text=3D+Horror"
-              alt="3D Horror Game"
-            />
+          <div
+            class="book-card"
+            v-for="(game, index) in threeDProjects"
+            :key="index"
+          >
+            <img :src="game.img" :alt="game.title" />
             <div class="book-title fw-semibold" style="font-size: 0.9rem">
-              3D Horror
+              {{ game.title }}
             </div>
             <div class="book-author text-muted" style="font-size: 0.75rem">
-              Engine: Unreal
-            </div>
-          </div>
-          <div class="book-card">
-            <img
-              src="https://via.placeholder.com/120x180/666666/FFFFFF?text=3D+Sandbox"
-              alt="3D Sandbox Game"
-            />
-            <div class="book-title fw-semibold" style="font-size: 0.9rem">
-              3D Sandbox
-            </div>
-            <div class="book-author text-muted" style="font-size: 0.75rem">
-              Engine: Unity
+              Engine: {{ game.engine }}
             </div>
           </div>
         </div>
       </div>
 
       <!-- CONCEPT ART SECTION -->
-      <div class="section concept-art visible mb-5" id="concept-art-section">
+      <!-- Show if activeCategory is 'all' or 'concept-art' -->
+      <div
+        class="mb-5"
+        v-show="activeCategory === 'all' || activeCategory === 'concept-art'"
+      >
         <div class="d-flex justify-content-between align-items-baseline mb-2">
           <h5 class="fw-semibold m-0" style="font-size: 1rem">Concept Art</h5>
-          <div class="text-danger" style="font-size: 0.9rem; cursor: pointer">
+          <div
+            class="text-danger"
+            style="font-size: 0.9rem; cursor: pointer"
+            @click="seeAll('concept-art')"
+          >
             See all
           </div>
         </div>
         <div class="book-list">
-          <div class="book-card">
-            <img
-              src="https://via.placeholder.com/120x180/BDB8A3/FFFFFF?text=Character+Design"
-              alt="Character Design"
-            />
+          <div
+            class="book-card"
+            v-for="(art, index) in conceptArtProjects"
+            :key="index"
+          >
+            <img :src="art.img" :alt="art.title" />
             <div class="book-title fw-semibold" style="font-size: 0.9rem">
-              Character Design
+              {{ art.title }}
             </div>
             <div class="book-author text-muted" style="font-size: 0.75rem">
-              Hand-drawn
-            </div>
-          </div>
-          <div class="book-card">
-            <img
-              src="https://via.placeholder.com/120x180/FCE16A/333333?text=World+Env"
-              alt="World Environment"
-            />
-            <div class="book-title fw-semibold" style="font-size: 0.9rem">
-              World Environment
-            </div>
-            <div class="book-author text-muted" style="font-size: 0.75rem">
-              Digital Art
+              {{ art.engine }}
             </div>
           </div>
         </div>
@@ -337,37 +321,85 @@
       </div>
     </nav>
 
+    <!-- 3. Vue 3 (CDN) -->
+    <script src="https://unpkg.com/vue@3"></script>
+
+    <!-- 4. Your Vue App Script -->
+    <script>
+      const { createApp } = Vue;
+
+      createApp({
+        data() {
+          return {
+            // Current active filter/category. 'all' by default
+            activeCategory: "all",
+
+            // List of categories for the buttons
+            categoryList: [
+              { id: 1, name: "All", value: "all" },
+              { id: 2, name: "2D Games", value: "two-d" },
+              { id: 3, name: "3D Games", value: "three-d" },
+              { id: 4, name: "Concept Art", value: "concept-art" },
+            ],
+
+            // Sample 2D projects
+            twoDProjects: [
+              {
+                title: "2D Action",
+                engine: "Unity",
+                img: "https://via.placeholder.com/120x180/DA2D2D/FFFFFF?text=2D+Action",
+              },
+              {
+                title: "2D Puzzle",
+                engine: "Godot",
+                img: "https://via.placeholder.com/120x180/F7C63B/333333?text=2D+Puzzle",
+              },
+            ],
+
+            // Sample 3D projects
+            threeDProjects: [
+              {
+                title: "3D Horror",
+                engine: "Unreal",
+                img: "https://via.placeholder.com/120x180/333333/FFFFFF?text=3D+Horror",
+              },
+              {
+                title: "3D Sandbox",
+                engine: "Unity",
+                img: "https://via.placeholder.com/120x180/666666/FFFFFF?text=3D+Sandbox",
+              },
+            ],
+
+            // Sample concept art
+            conceptArtProjects: [
+              {
+                title: "Character Design",
+                engine: "Hand-drawn",
+                img: "https://via.placeholder.com/120x180/BDB8A3/FFFFFF?text=Character+Design",
+              },
+              {
+                title: "World Environment",
+                engine: "Digital Art",
+                img: "https://via.placeholder.com/120x180/FCE16A/333333?text=World+Env",
+              },
+            ],
+          };
+        },
+        methods: {
+          // Set the active category for filtering
+          setCategory(categoryValue) {
+            this.activeCategory = categoryValue;
+          },
+          // Example: “See all” could do something extra, e.g., navigate or open a modal
+          seeAll(section) {
+            alert(`"See all" clicked for section: ${section}`);
+            // You could navigate, filter more items, open a new page, etc.
+          },
+        },
+      }).mount("#app");
+    </script>
+
     <!-- Bootstrap 5 JS (CDN) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
-    <!-- Simple Category Toggle Script -->
-    <script>
-      const buttons = document.querySelectorAll(".category-btn");
-      const sections = document.querySelectorAll(".section");
-
-      // "All" button is active by default in HTML
-      buttons.forEach((btn) => {
-        btn.addEventListener("click", () => {
-          // Remove .active from all category buttons
-          buttons.forEach((b) => b.classList.remove("active"));
-          // Add .active to the clicked button
-          btn.classList.add("active");
-
-          const filter = btn.dataset.filter;
-
-          sections.forEach((sec) => {
-            if (filter === "all") {
-              sec.classList.add("visible");
-            } else {
-              if (sec.classList.contains(filter)) {
-                sec.classList.add("visible");
-              } else {
-                sec.classList.remove("visible");
-              }
-            }
-          });
-        });
-      });
-    </script>
   </body>
 </html>
