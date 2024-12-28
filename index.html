@@ -27,7 +27,6 @@
         font-style: normal;
       }
 
-      /* Base font size a bit bigger */
       html {
         font-size: 1.1rem;
       }
@@ -37,23 +36,7 @@
         background-color: #f1eee3;
         color: #222;
         margin: 0;
-        padding-bottom: 100px; /* Enough bottom padding so the pill nav doesn't overlap content */
-      }
-
-      /* PDF BUTTON (notification-circle) -> 80x80 */
-      .notification-circle {
-        width: 50px;
-        height: 50px;
-        background-color: #000;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-      }
-      .notification-circle i {
-        color: #fff;
-        font-size: 1.5rem; /* smaller icon size */
+        padding-bottom: 100px;
       }
 
       .highlight {
@@ -68,7 +51,7 @@
 
       .category-btn {
         border: none;
-        border-radius: 100px; /* fully rounded corners */
+        border-radius: 100px;
         height: 66px;
         padding: 20px 36px;
         font-size: 20px;
@@ -86,7 +69,7 @@
         background-color: #191815;
         color: #fff;
       }
-      /* SECTION TITLES & "SEE ALL" LINK */
+
       .section-title {
         font-size: 1.2rem;
       }
@@ -98,10 +81,6 @@
         text-decoration: underline;
       }
 
-      /*
-        GAME / PROJECT CARDS
-        (width=160, height=240 from before)
-      */
       .game-list {
         overflow-x: auto;
         white-space: nowrap;
@@ -127,26 +106,19 @@
         font-size: 0.9rem;
       }
 
-      /*
-        PILL-SHAPED BOTTOM NAV (BIGGER):
-        - Width: 85% (was 80%)
-        - Max-width: 450px (was 400px)
-        - Padding: 0.5rem (was 0.3rem)
-        - Icon size: 1.4rem (was 1.2rem)
-      */
       .bottom-nav-pills {
         position: fixed;
         left: 50%;
         bottom: 20px;
         transform: translateX(-50%);
-        width: 85%; /* slightly bigger width */
-        max-width: 450px; /* bigger max width */
+        width: 85%;
+        max-width: 450px;
         background-color: #000;
         color: #fff;
-        border-radius: 9999px; /* pill shape */
+        border-radius: 9999px;
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
         z-index: 9999;
-        padding: 0.5rem 0; /* increased vertical padding */
+        padding: 0.5rem 0;
       }
       .bottom-nav-pills .nav-content {
         display: flex;
@@ -155,15 +127,14 @@
       }
       .bottom-nav-pills .nav-content a {
         color: #fff;
-        font-size: 1.4rem; /* bigger icon size */
+        font-size: 1.4rem;
         text-decoration: none;
-        padding: 0.5rem 0.75rem; /* slightly bigger clickable area */
+        padding: 0.5rem 0.75rem;
       }
       .bottom-nav-pills a.active {
         color: #e05c5c;
       }
 
-      /* OPTIONAL: container max widths for bigger screens */
       @media (min-width: 576px) {
         .custom-container {
           max-width: 540px;
@@ -187,7 +158,6 @@
     </style>
   </head>
   <body>
-    <!-- VUE APP WRAPPER -->
     <div id="app" class="container custom-container py-4">
       <!-- HEADER -->
       <header class="mb-4">
@@ -201,12 +171,7 @@
               style="width: 100px; height: 100px; object-fit: cover"
             />
           </div>
-          <!-- PDF Icon Circle -->
-          <div class="notification-circle">
-            <i class="bi bi-file-earmark-pdf-fill"></i>
-          </div>
         </div>
-
         <h2 class="fw-normal" style="font-size: 1.8rem">
           Hey, <span class="highlight">I'm Toghrul!</span>
         </h2>
@@ -250,20 +215,23 @@
       </div>
     </div>
 
-    <!-- BIGGER PILL-SHAPED BOTTOM NAV -->
+    <!-- BOTTOM NAVIGATION -->
     <nav class="bottom-nav-pills">
       <div class="nav-content">
-        <a href="#" class="active">
-          <i class="bi bi-grid-fill"></i>
+        <a href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer">
+          <i class="bi bi-linkedin"></i>
         </a>
-        <a href="#">
-          <i class="bi bi-search"></i>
+        <a href="https://github.com/" target="_blank" rel="noopener noreferrer">
+          <i class="bi bi-github"></i>
         </a>
-        <a href="#">
-          <i class="bi bi-bell-fill"></i>
+        <a href="https://twitter.com/" target="_blank" rel="noopener noreferrer">
+          <i class="bi bi-twitter"></i>
         </a>
-        <a href="#">
-          <i class="bi bi-person-fill"></i>
+        <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer">
+          <i class="bi bi-instagram"></i>
+        </a>
+        <a href="path-to-pdf/Toghrul-Portfolio.pdf" download>
+          <i class="bi bi-file-earmark-pdf-fill"></i>
         </a>
       </div>
     </nav>
