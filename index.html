@@ -1,246 +1,250 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="UTF-8" />
     <!-- Make page responsive on mobile -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Toghrul's Unity Portfolio</title>
 
     <!-- Bootstrap 5 CSS (CDN) -->
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
-    />
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" />
     <!-- Bootstrap Icons (CDN) -->
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
-    />
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" />
 
     <!-- Custom Fonts and Styles -->
     <style>
-      @font-face {
-        font-family: "Albra";
-        src: url("Albra-Regular.otf") format("opentype");
-        font-weight: normal;
-        font-style: normal;
-      }
-
-      @font-face {
-        font-family: "Albra";
-        src: url("Albra-Medium.otf") format("opentype");
-        font-weight: 500;
-        font-style: normal;
-      }
-
-      html {
-        font-size: 1.1rem;
-      }
-
-      body {
-        font-family: "Albra", sans-serif;
-        background-color: #f1eee3;
-        color: #222;
-        margin: 0;
-        padding-bottom: 100px;
-      }
-
-      .highlight {
-        color: #e05c5c;
-      }
-
-      header h2 {
-        font-weight: 500;
-        line-height: 1.6;
-        font-size: 28px;
-      }
-
-      .category-btn {
-        border: none;
-        border-radius: 100px;
-        height: 66px;
-        padding: 20px 36px;
-        font-size: 20px;
-        background-color: #e7e0cb;
-        color: #222;
-        white-space: nowrap;
-        cursor: pointer;
-        display: inline-flex;
-        align-items: center;
-        font-family: "Albra", sans-serif;
-      }
-      .category-btn:hover {
-        opacity: 0.8;
-      }
-      .category-btn.active {
-        background-color: #191815;
-        color: #fff;
-      }
-
-      .section-title {
-        font-size: 1.2rem;
-      }
-      .see-all-link {
-        font-size: 1rem;
-        cursor: pointer;
-      }
-      .see-all-link:hover {
-        text-decoration: underline;
-      }
-
-      .game-list {
-        overflow-x: auto;
-        white-space: nowrap;
-      }
-      .game-card {
-        display: inline-block;
-        width: 160px;
-        margin-right: 20px;
-        cursor: pointer;
-        vertical-align: top;
-      }
-      .game-card img {
-        width: 100%;
-        height: 240px;
-        object-fit: cover;
-        border-radius: 4px;
-        margin-bottom: 4px;
-      }
-      .game-title {
-        font-size: 1.1rem;
-        font-weight: 500;
-      }
-      .game-author {
-        font-size: 0.9rem;
-      }
-
-      .bottom-nav-pills {
-        position: fixed;
-        left: 50%;
-        bottom: 20px;
-        transform: translateX(-50%);
-        width: 85%;
-        max-width: 450px;
-        background-color: #000;
-        color: #fff;
-        border-radius: 9999px;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-        z-index: 9999;
-        padding: 0.5rem 0;
-      }
-      .bottom-nav-pills .nav-content {
-        display: flex;
-        justify-content: space-around;
-        align-items: center;
-      }
-      .bottom-nav-pills .nav-content a {
-        color: #fff;
-        font-size: 1.4rem;
-        text-decoration: none;
-        padding: 0.5rem 0.75rem;
-      }
-      .bottom-nav-pills a.active {
-        color: #e05c5c;
-      }
-
-      @media (min-width: 576px) {
-        .custom-container {
-          max-width: 540px;
+        @font-face {
+            font-family: "Albra";
+            src: url("Albra-Regular.otf") format("opentype");
+            font-weight: normal;
+            font-style: normal;
         }
-      }
-      @media (min-width: 768px) {
-        .custom-container {
-          max-width: 720px;
+
+        @font-face {
+            font-family: "Albra";
+            src: url("Albra-Medium.otf") format("opentype");
+            font-weight: 500;
+            font-style: normal;
         }
-      }
-      @media (min-width: 992px) {
-        .custom-container {
-          max-width: 960px;
+
+        html {
+            font-size: 1.1rem;
         }
-      }
-      @media (min-width: 1200px) {
-        .custom-container {
-          max-width: 1140px;
+
+        body {
+            font-family: "Albra", sans-serif;
+            background-color: #f1eee3;
+            color: #222;
+            margin: 0;
+            padding-bottom: 100px;
         }
-      }
+
+        .highlight {
+            color: #e05c5c;
+        }
+
+        header h2 {
+            font-weight: 500;
+            line-height: 1.6;
+            font-size: 28px;
+        }
+
+        .category-btn {
+            border: none;
+            border-radius: 100px;
+            height: 66px;
+            padding: 20px 36px;
+            font-size: 20px;
+            background-color: #e7e0cb;
+            color: #222;
+            white-space: nowrap;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            font-family: "Albra", sans-serif;
+        }
+
+            .category-btn:hover {
+                opacity: 0.8;
+            }
+
+            .category-btn.active {
+                background-color: #191815;
+                color: #fff;
+            }
+
+        .section-title {
+            font-size: 1.2rem;
+        }
+
+        .see-all-link {
+            font-size: 1rem;
+            cursor: pointer;
+        }
+
+            .see-all-link:hover {
+                text-decoration: underline;
+            }
+
+        .game-list {
+            overflow-x: auto;
+            white-space: nowrap;
+        }
+
+        .game-card {
+            display: inline-block;
+            width: 160px;
+            margin-right: 20px;
+            cursor: pointer;
+            vertical-align: top;
+        }
+
+            .game-card img {
+                width: 100%;
+                height: 240px;
+                object-fit: cover;
+                border-radius: 4px;
+                margin-bottom: 4px;
+            }
+
+        .game-title {
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+
+        .game-author {
+            font-size: 0.9rem;
+        }
+
+        .bottom-nav-pills {
+            position: fixed;
+            left: 50%;
+            bottom: 20px;
+            transform: translateX(-50%);
+            width: 85%;
+            max-width: 450px;
+            background-color: #000;
+            color: #fff;
+            border-radius: 9999px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            z-index: 9999;
+            padding: 0.5rem 0;
+        }
+
+            .bottom-nav-pills .nav-content {
+                display: flex;
+                justify-content: space-around;
+                align-items: center;
+            }
+
+                .bottom-nav-pills .nav-content a {
+                    color: #fff;
+                    font-size: 1.4rem;
+                    text-decoration: none;
+                    padding: 0.5rem 0.75rem;
+                }
+
+            .bottom-nav-pills a.active {
+                color: #e05c5c;
+            }
+
+        @media (min-width: 576px) {
+            .custom-container {
+                max-width: 540px;
+            }
+        }
+
+        @media (min-width: 768px) {
+            .custom-container {
+                max-width: 720px;
+            }
+        }
+
+        @media (min-width: 992px) {
+            .custom-container {
+                max-width: 960px;
+            }
+        }
+
+        @media (min-width: 1200px) {
+            .custom-container {
+                max-width: 1140px;
+            }
+        }
     </style>
-  </head>
-  <body>
+</head>
+<body>
     <div id="app" class="container custom-container py-4">
-      <!-- HEADER -->
-      <header class="mb-4">
-        <div class="d-flex justify-content-between align-items-center mb-3">
-          <div class="profile-image">
-            <img
-              src="https://via.placeholder.com/100.png/000000/FFFFFF?text=Me"
-              alt="Toghrul"
-              class="rounded-circle"
-              style="width: 100px; height: 100px; object-fit: cover"
-            />
-          </div>
-        </div>
-        <h2 class="fw-normal" style="font-size: 1.8rem">
-          Hey, <span class="highlight">I'm Toghrul!</span>
-        </h2>
-        <p class="fw-normal" style="font-size: 1.8rem">
-          Check out my Unity game dev projects.
-        </p>
-      </header>
+        <!-- HEADER -->
+        <header class="mb-4">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <div class="profile-image">
+                    <img src="https://via.placeholder.com/100.png/000000/FFFFFF?text=Me"
+                         alt="ME"
+                         class="rounded-circle"
+                         style="width: 100px; height: 100px; object-fit: cover" />
+                </div>
+            </div>
+            <h2 class="fw-normal" style="font-size: 1.8rem">
+                Hey, <span class="highlight">I'm Toghrul!</span>
+            </h2>
+            <p class="fw-normal" style="font-size: 1.8rem">
+                Check out my Unity game dev projects.
+            </p>
+        </header>
 
-      <!-- CATEGORY FILTERS -->
-      <div class="d-flex gap-2 mb-4 overflow-auto">
-        <button
-          v-for="cat in categoryList"
-          :key="cat.id"
-          class="category-btn"
-          :class="{ active: activeCategory === cat.value }"
-          @click="setCategory(cat.value)"
-        >
-          {{ cat.name }}
-        </button>
-      </div>
+        <!-- CATEGORY FILTERS -->
+        <div class="d-flex gap-2 mb-4 overflow-auto">
+            <button v-for="cat in categoryList"
+                    :key="cat.id"
+                    class="category-btn"
+                    :class="{ active: activeCategory === cat.value }"
+                    @click="setCategory(cat.value)">
+                {{ cat.name }}
+            </button>
+        </div>
 
-      <!-- PROJECT SECTIONS -->
-      <div v-for="section in sections" :key="section.id" class="mb-5">
-        <div class="d-flex justify-content-between align-items-baseline mb-2">
-          <h5 class="fw-semibold m-0 section-title">{{ section.title }}</h5>
-          <div class="text-danger see-all-link" @click="seeAll(section.id)">
-            See all
-          </div>
+        <!-- PROJECT SECTIONS -->
+        <div v-for="section in sections" :key="section.id" class="mb-5">
+            <div class="d-flex justify-content-between align-items-baseline mb-2">
+                <h5 class=" m-0 section-title">{{ section.title }}</h5>
+                <div class="text-danger see-all-link" @click="seeAll(section.id)">
+                    See all
+                </div>
+            </div>
+            <div class="game-list">
+                <div class="game-card"
+                     v-for="(proj, index) in section.projects"
+                     :key="index">
+                    <img :src="proj.img" :alt="proj.title" />
+                    <div class="game-title ">{{ proj.title }}</div>
+                    <div class="game-author text-muted">{{ proj.engine }}</div>
+                </div>
+            </div>
         </div>
-        <div class="game-list">
-          <div
-            class="game-card"
-            v-for="(proj, index) in section.projects"
-            :key="index"
-          >
-            <img :src="proj.img" :alt="proj.title" />
-            <div class="game-title fw-semibold">{{ proj.title }}</div>
-            <div class="game-author text-muted">{{ proj.engine }}</div>
-          </div>
-        </div>
-      </div>
     </div>
 
     <!-- BOTTOM NAVIGATION -->
     <nav class="bottom-nav-pills">
-      <div class="nav-content">
-        <a href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer">
-          <i class="bi bi-linkedin"></i>
-        </a>
-        <a href="https://github.com/" target="_blank" rel="noopener noreferrer">
-          <i class="bi bi-github"></i>
-        </a>
-        <a href="https://twitter.com/" target="_blank" rel="noopener noreferrer">
-          <i class="bi bi-twitter"></i>
-        </a>
-        <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer">
-          <i class="bi bi-instagram"></i>
-        </a>
-        <a href="path-to-pdf/Toghrul-Portfolio.pdf" download>
-          <i class="bi bi-file-earmark-pdf-fill"></i>
-        </a>
-      </div>
+        <div class="nav-content">
+            <a href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer">
+                <i class="bi bi-linkedin"></i>
+            </a>
+            <a href="https://github.com/" target="_blank" rel="noopener noreferrer">
+                <i class="bi bi-github"></i>
+            </a>
+            <a href="https://twitter.com/" target="_blank" rel="noopener noreferrer">
+                <i class="bi bi-twitter"></i>
+            </a>
+            <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer">
+                <i class="bi bi-instagram"></i>
+            </a>
+            <a href="path-to-pdf/Toghrul-Portfolio.pdf" download>
+                <i class="bi bi-file-earmark-pdf-fill"></i>
+            </a>
+        </div>
     </nav>
 
     <!-- Vue 3 (CDN) -->
@@ -249,8 +253,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
     <!-- Your Vue App Script -->
-    <script>
-      const { createApp } = Vue;
+    <script>const { createApp } = Vue;
 
       createApp({
         data() {
@@ -322,7 +325,6 @@
             alert(`"See all" clicked for section: ${section}`);
           },
         },
-      }).mount("#app");
-    </script>
-  </body>
+      }).mount("#app");</script>
+</body>
 </html>
