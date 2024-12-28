@@ -34,16 +34,13 @@
 
       body {
         font-family: "Calibra", sans-serif;
-        background-color: #f1eee3;
+        background-color: #F1EEE3;
         color: #222;
         margin: 0;
         padding-bottom: 100px; /* Enough bottom padding so the pill nav doesn't overlap content */
       }
 
-      /* 
-        PDF BUTTON (notification-circle) 
-        -> smaller than previous 100x100, let's do 80x80 
-      */
+      /* PDF BUTTON (notification-circle) -> 80x80 */
       .notification-circle {
         width: 80px;
         height: 80px;
@@ -54,10 +51,9 @@
         justify-content: center;
         cursor: pointer;
       }
-      /* Icon inside the smaller circle: let's do 1.5rem (previously 2rem) */
       .notification-circle i {
         color: #fff;
-        font-size: 1.5rem;
+        font-size: 1.5rem; /* smaller icon size */
       }
 
       .highlight {
@@ -70,19 +66,14 @@
         font-size: 28px;
       }
 
-      /*
-        CATEGORY BUTTONS (BIGGER):
-        - height: 66px (was 60)
-        - padding: 20px 36px (was 18px 32)
-        - font-size: 20px (was 18)
-      */
+      /* CATEGORY BUTTONS (BIGGER) */
       .category-btn {
         border: none;
         border-radius: 20px;
         height: 66px;
         padding: 20px 36px;
         font-size: 20px;
-        background-color: #e7e0cb;
+        background-color: #E7E0CB;
         color: #222;
         white-space: nowrap;
         cursor: pointer;
@@ -139,24 +130,25 @@
       }
 
       /*
-        PILL-SHAPED BOTTOM NAV (smaller):
-        - narrower width: 80%
-        - smaller max-width: 400px
-        - less top/bottom padding: 0.3rem
+        PILL-SHAPED BOTTOM NAV (BIGGER):
+        - Width: 85% (was 80%)
+        - Max-width: 450px (was 400px)
+        - Padding: 0.5rem (was 0.3rem)
+        - Icon size: 1.4rem (was 1.2rem)
       */
       .bottom-nav-pills {
         position: fixed;
         left: 50%;
         bottom: 20px;
         transform: translateX(-50%);
-        width: 80%;
-        max-width: 400px;
+        width: 85%;            /* slightly bigger width */
+        max-width: 450px;      /* bigger max width */
         background-color: #000;
         color: #fff;
-        border-radius: 9999px;
+        border-radius: 9999px; /* pill shape */
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
         z-index: 9999;
-        padding: 0.3rem 0;
+        padding: 0.5rem 0;     /* increased vertical padding */
       }
       .bottom-nav-pills .nav-content {
         display: flex;
@@ -165,12 +157,12 @@
       }
       .bottom-nav-pills .nav-content a {
         color: #fff;
-        font-size: 1.2rem;
+        font-size: 1.4rem;     /* bigger icon size */
         text-decoration: none;
-        padding: 0.3rem 0.5rem;
+        padding: 0.5rem 0.75rem; /* slightly bigger clickable area */
       }
       .bottom-nav-pills a.active {
-        color: #e05c5c;
+        color: #e05c5c; 
       }
 
       /* OPTIONAL: container max widths for bigger screens */
@@ -201,9 +193,8 @@
     <div id="app" class="container custom-container py-4">
       <!-- HEADER -->
       <header class="mb-4">
-        <!-- Top row: Avatar on the left, PDF icon (now smaller) on the right -->
         <div class="d-flex justify-content-between align-items-center mb-3">
-          <!-- Profile Image (100x100) -->
+          <!-- Profile Image -->
           <div class="profile-image">
             <img
               src="https://via.placeholder.com/100.png/000000/FFFFFF?text=Me"
@@ -212,7 +203,7 @@
               style="width: 100px; height: 100px; object-fit: cover"
             />
           </div>
-          <!-- PDF Icon Circle (80x80) -->
+          <!-- PDF Icon Circle -->
           <div class="notification-circle">
             <i class="bi bi-file-earmark-pdf-fill"></i>
           </div>
@@ -226,7 +217,7 @@
         </p>
       </header>
 
-      <!-- CATEGORY FILTERS (BIGGER BUTTONS) -->
+      <!-- CATEGORY FILTERS -->
       <div class="d-flex gap-2 mb-4 overflow-auto">
         <button
           v-for="cat in categoryList"
@@ -239,80 +230,29 @@
         </button>
       </div>
 
-      <!-- 2D PROJECTS SECTION -->
-      <div
-        class="mb-4"
-        v-show="activeCategory === 'all' || activeCategory === 'two-d'"
-      >
+      <!-- PROJECT SECTIONS -->
+      <div v-for="section in sections" :key="section.id" class="mb-5">
         <div class="d-flex justify-content-between align-items-baseline mb-2">
-          <h5 class="fw-semibold m-0 section-title">2D Projects</h5>
-          <div class="text-danger see-all-link" @click="seeAll('two-d')">
+          <h5 class="fw-semibold m-0 section-title">{{ section.title }}</h5>
+          <div class="text-danger see-all-link" @click="seeAll(section.id)">
             See all
           </div>
         </div>
         <div class="game-list">
           <div
             class="game-card"
-            v-for="(proj, index) in twoDProjects"
+            v-for="(proj, index) in section.projects"
             :key="index"
           >
             <img :src="proj.img" :alt="proj.title" />
             <div class="game-title fw-semibold">{{ proj.title }}</div>
-            <div class="game-author text-muted">Engine: {{ proj.engine }}</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- 3D PROJECTS SECTION -->
-      <div
-        class="mb-4"
-        v-show="activeCategory === 'all' || activeCategory === 'three-d'"
-      >
-        <div class="d-flex justify-content-between align-items-baseline mb-2">
-          <h5 class="fw-semibold m-0 section-title">3D Projects</h5>
-          <div class="text-danger see-all-link" @click="seeAll('three-d')">
-            See all
-          </div>
-        </div>
-        <div class="game-list">
-          <div
-            class="game-card"
-            v-for="(proj, index) in threeDProjects"
-            :key="index"
-          >
-            <img :src="proj.img" :alt="proj.title" />
-            <div class="game-title fw-semibold">{{ proj.title }}</div>
-            <div class="game-author text-muted">Engine: {{ proj.engine }}</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- CONCEPT ART SECTION -->
-      <div
-        class="mb-5"
-        v-show="activeCategory === 'all' || activeCategory === 'concept-art'"
-      >
-        <div class="d-flex justify-content-between align-items-baseline mb-2">
-          <h5 class="fw-semibold m-0 section-title">Concept Art</h5>
-          <div class="text-danger see-all-link" @click="seeAll('concept-art')">
-            See all
-          </div>
-        </div>
-        <div class="game-list">
-          <div
-            class="game-card"
-            v-for="(art, index) in conceptArtProjects"
-            :key="index"
-          >
-            <img :src="art.img" :alt="art.title" />
-            <div class="game-title fw-semibold">{{ art.title }}</div>
-            <div class="game-author text-muted">Engine: {{ art.engine }}</div>
+            <div class="game-author text-muted">{{ proj.engine }}</div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- SMALL PILL-SHAPED BOTTOM NAV -->
+    <!-- BIGGER PILL-SHAPED BOTTOM NAV -->
     <nav class="bottom-nav-pills">
       <div class="nav-content">
         <a href="#" class="active">
@@ -342,66 +282,69 @@
       createApp({
         data() {
           return {
-            // Toggles which category is displayed; default "all"
             activeCategory: "all",
-
-            // Toghrul's categories
             categoryList: [
               { id: 1, name: "All", value: "all" },
               { id: 2, name: "2D Projects", value: "two-d" },
               { id: 3, name: "3D Projects", value: "three-d" },
               { id: 4, name: "Concept Art", value: "concept-art" },
             ],
-
-            // Sample 2D Projects
-            twoDProjects: [
+            sections: [
               {
-                title: "2D Action",
-                engine: "Unity",
-                img: "https://via.placeholder.com/160x240.png/DA2D2D/FFFFFF?text=2D%20Action",
+                id: "two-d",
+                title: "2D Projects",
+                projects: [
+                  {
+                    title: "2D Action",
+                    engine: "Unity",
+                    img: "https://via.placeholder.com/160x240.png/DA2D2D/FFFFFF?text=2D%20Action",
+                  },
+                  {
+                    title: "2D Puzzle",
+                    engine: "Unity",
+                    img: "https://via.placeholder.com/160x240.png/F4C63C/333333?text=2D%20Puzzle",
+                  },
+                ],
               },
               {
-                title: "2D Puzzle",
-                engine: "Unity",
-                img: "https://via.placeholder.com/160x240.png/F4C63C/333333?text=2D%20Puzzle",
-              },
-            ],
-
-            // Sample 3D Projects
-            threeDProjects: [
-              {
-                title: "3D Sandbox",
-                engine: "Unity",
-                img: "https://via.placeholder.com/160x240.png/666666/FFFFFF?text=3D%20Sandbox",
-              },
-              {
-                title: "3D Horror",
-                engine: "Unity",
-                img: "https://via.placeholder.com/160x240.png/333333/FFFFFF?text=3D%20Horror",
-              },
-            ],
-
-            // Sample Concept Art
-            conceptArtProjects: [
-              {
-                title: "Character Design",
-                engine: "Hand-drawn",
-                img: "https://via.placeholder.com/160x240.png/BDB8A3/FFFFFF?text=Character%20Design",
+                id: "three-d",
+                title: "3D Projects",
+                projects: [
+                  {
+                    title: "3D Sandbox",
+                    engine: "Unity",
+                    img: "https://via.placeholder.com/160x240.png/666666/FFFFFF?text=3D%20Sandbox",
+                  },
+                  {
+                    title: "3D Horror",
+                    engine: "Unity",
+                    img: "https://via.placeholder.com/160x240.png/333333/FFFFFF?text=3D%20Horror",
+                  },
+                ],
               },
               {
-                title: "World Environment",
-                engine: "Digital Art",
-                img: "https://via.placeholder.com/160x240.png/FCE16A/333333?text=World%20Env",
+                id: "concept-art",
+                title: "Concept Art",
+                projects: [
+                  {
+                    title: "Character Design",
+                    engine: "Hand-drawn",
+                    img: "https://via.placeholder.com/160x240.png/BDB8A3/FFFFFF?text=Character%20Design",
+                  },
+                  {
+                    title: "World Environment",
+                    engine: "Digital Art",
+                    img: "https://via.placeholder.com/160x240.png/FCE16A/333333?text=World%20Env",
+                  },
+                ],
               },
             ],
           };
         },
         methods: {
-          // Switches the displayed category
           setCategory(categoryValue) {
             this.activeCategory = categoryValue;
           },
-          // "See all" placeholder
           seeAll(section) {
             alert(`"See all" clicked for section: ${section}`);
           },
