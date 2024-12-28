@@ -2,23 +2,22 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <!-- Make the page responsive on mobile -->
+    <!-- Make page responsive on mobile -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Game Developer Portfolio</title>
 
-    <!-- 1. Bootstrap 5 CSS (CDN) -->
+    <!-- Bootstrap 5 CSS (CDN) -->
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
     />
-
-    <!-- 1b. Bootstrap Icons (CDN) -->
+    <!-- Bootstrap Icons (CDN) -->
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
     />
 
-    <!-- 2. Calibra Font (Replace with your own @font-face or CDN) -->
+    <!-- Optional: Calibra font -->
     <style>
       @font-face {
         font-family: "Calibra";
@@ -28,16 +27,21 @@
         font-style: normal;
       }
 
-      /* Use Calibra throughout */
-      body {
-        font-family: "Calibra", sans-serif;
-        background-color: #faf9f7;
-        color: #222;
-        /* Add some bottom padding so content doesn't go behind bottom nav */
-        padding-bottom: 70px;
+      /* Base font size a bit bigger */
+      html {
+        font-size: 1.1rem;
       }
 
-      /* Slight custom styling for the bell icon circle */
+      body {
+        font-family: "Calibra", sans-serif;
+        background-color: #F1EEE3;
+        color: #222;
+        margin: 0;
+        /* Enough bottom padding so the "pill" nav doesn't overlap content */
+        padding-bottom: 100px;
+      }
+
+      /* HEADER / NOTIFICATION CIRCLE */
       .notification-circle {
         width: 36px;
         height: 36px;
@@ -53,75 +57,117 @@
         font-size: 1.1rem;
       }
 
-      /* Highlight color for the name "Steve!" */
       .highlight {
         color: #e05c5c;
       }
 
-      /* Make the header h2 use medium weight and 160% line-height */
       header h2 {
-        font-weight: 500; /* 'medium' weight is generally 500 */
-        line-height: 1.6; /* 160% of the font size */
+        font-weight: 500;
+        line-height: 1.6;
+        font-size: 28px;
       }
 
-      /* 
-        Category buttons: 
-        - Pill shape
-        - Neutral background by default
-        - Active state is black background, white text
-      */
+      /* CATEGORY BUTTONS */
       .category-btn {
         border: none;
         border-radius: 20px;
-        padding: 6px 16px;
-        font-size: 0.9rem;
-        background-color: #f1ebe9; /* neutral/off-white tone */
+        height: 55px;
+        padding: 16px 28px;
+        font-size: 16px;
+        background-color: #E7E0CB;
         color: #222;
         white-space: nowrap;
         cursor: pointer;
+        display: inline-flex;
+        align-items: center;
       }
       .category-btn:hover {
         opacity: 0.8;
       }
       .category-btn.active {
-        background-color: #000;
+        background-color: #191815;
         color: #fff;
       }
 
-      /* Horizontal scrolling project list */
+      /* SECTION TITLES & "SEE ALL" LINK */
+      .section-title {
+        font-size: 1.2rem;
+      }
+      .see-all-link {
+        font-size: 1rem;
+        cursor: pointer;
+      }
+      .see-all-link:hover {
+        text-decoration: underline;
+      }
+
+      /*
+        BOOK / PROJECT CARDS:
+        - Made bigger: width ~160px, height ~240px
+      */
       .book-list {
         overflow-x: auto;
-        white-space: nowrap; /* Keep items in a row */
+        white-space: nowrap;
       }
       .book-card {
-        display: inline-block; /* So they line up horizontally */
-        width: 120px;
-        margin-right: 20px; /* Gap between cards */
+        display: inline-block;
+        width: 160px; /* bigger width */
+        margin-right: 20px;
         cursor: pointer;
         vertical-align: top;
       }
       .book-card img {
         width: 100%;
-        height: 180px;
+        height: 240px; /* bigger height */
         object-fit: cover;
         border-radius: 4px;
         margin-bottom: 4px;
       }
+      .book-title {
+        font-size: 1.1rem;
+      }
+      .book-author {
+        font-size: 0.9rem;
+      }
 
-      /* Bottom nav with a black background, fixed at bottom */
-      .bottom-nav {
+      /* 
+        PILL-SHAPED BOTTOM NAV:
+        - Centered horizontally
+        - Slightly above the bottom 
+        - Rounded corners
+        - Icons spaced out
+      */
+      .bottom-nav-pills {
+        position: fixed;
+        left: 50%;
+        bottom: 20px;
+        transform: translateX(-50%);
+        width: 90%;
+        max-width: 500px;
         background-color: #000;
         color: #fff;
+        border-radius: 9999px; /* pill shape */
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        z-index: 9999;
+        padding: 0.5rem 0; /* top/bottom space inside pill */
       }
-      .nav-link i {
-        font-size: 1.1rem;
-        display: block;
+      .bottom-nav-pills .nav-content {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
       }
-      .nav-link div {
-        font-size: 0.7rem;
+      /* Icons a bit bigger, plus optional active color for one icon */
+      .bottom-nav-pills .nav-content a {
+        color: #fff;
+        font-size: 1.4rem;
+        text-decoration: none;
+        padding: 0.5rem 0.75rem; /* clickable area */
+      }
+      .bottom-nav-pills a.active {
+        color: #e05c5c; /* highlight color for active */
       }
 
-      /* Optional: Adjust container max-width for bigger screens using media queries */
+      /* OPTIONAL: container max widths for bigger screens */
       @media (min-width: 576px) {
         .custom-container {
           max-width: 540px;
@@ -145,41 +191,36 @@
     </style>
   </head>
   <body>
-    <!-- 
-      VUE APP WRAPPER
-      The id="app" element is where our Vue instance is mounted.
-    -->
+    <!-- VUE APP WRAPPER -->
     <div id="app" class="container custom-container py-4">
       <!-- HEADER -->
       <header class="mb-4">
-        <!-- Top row: Avatar on the left, Bell on the right -->
+        <!-- Top row: Avatar on the left, PDF icon on the right -->
         <div class="d-flex justify-content-between align-items-center mb-3">
-          <!-- Avatar -->
+          <!-- Profile Image (100x100) -->
           <div class="profile-image">
             <img
-              src="https://via.placeholder.com/48?text=Me"
+              src="https://via.placeholder.com/100.png/000000/FFFFFF?text=Me"
               alt="Profile"
               class="rounded-circle"
-              style="width: 48px; height: 48px; object-fit: cover"
+              style="width: 100px; height: 100px; object-fit: cover"
             />
           </div>
-          <!-- Notification bell in a black circle -->
+          <!-- PDF Icon in black circle -->
           <div class="notification-circle">
-            <i class="bi bi-bell-fill"></i>
+            <i class="bi bi-file-earmark-pdf-fill"></i>
           </div>
         </div>
 
-        <!-- Greeting -->
         <h2 class="fw-normal">
-          Hey, <span class="highlight">I'm Toghrul!</span>
+          Hey, <span class="highlight">I'm Steve!</span>
         </h2>
         <p class="mb-0 text-secondary" style="font-size: 1rem">
-          Check out my game dev projects.
+          What will you listen today?
         </p>
       </header>
 
       <!-- CATEGORY FILTERS -->
-      <!-- We loop through categoryList in Vue and create buttons -->
       <div class="d-flex gap-2 mb-4 overflow-auto">
         <button
           v-for="cat in categoryList"
@@ -193,22 +234,16 @@
       </div>
 
       <!-- 2D GAMES SECTION -->
-      <!-- Show if activeCategory is 'all' or 'two-d' -->
       <div
         class="mb-4"
         v-show="activeCategory === 'all' || activeCategory === 'two-d'"
       >
         <div class="d-flex justify-content-between align-items-baseline mb-2">
-          <h5 class="fw-semibold m-0" style="font-size: 1rem">2D Games</h5>
-          <div
-            class="text-danger"
-            style="font-size: 0.9rem; cursor: pointer"
-            @click="seeAll('two-d')"
-          >
+          <h5 class="fw-semibold m-0 section-title">Drama</h5>
+          <div class="text-danger see-all-link" @click="seeAll('two-d')">
             See all
           </div>
         </div>
-        <!-- Project list horizontally scrollable -->
         <div class="book-list">
           <div
             class="book-card"
@@ -216,29 +251,24 @@
             :key="index"
           >
             <img :src="game.img" :alt="game.title" />
-            <div class="book-title fw-semibold" style="font-size: 0.9rem">
+            <div class="book-title fw-semibold">
               {{ game.title }}
             </div>
-            <div class="book-author text-muted" style="font-size: 0.75rem">
-              Engine: {{ game.engine }}
+            <div class="book-author text-muted">
+              {{ game.author }}
             </div>
           </div>
         </div>
       </div>
 
       <!-- 3D GAMES SECTION -->
-      <!-- Show if activeCategory is 'all' or 'three-d' -->
       <div
         class="mb-4"
         v-show="activeCategory === 'all' || activeCategory === 'three-d'"
       >
         <div class="d-flex justify-content-between align-items-baseline mb-2">
-          <h5 class="fw-semibold m-0" style="font-size: 1rem">3D Games</h5>
-          <div
-            class="text-danger"
-            style="font-size: 0.9rem; cursor: pointer"
-            @click="seeAll('three-d')"
-          >
+          <h5 class="fw-semibold m-0 section-title">Detective</h5>
+          <div class="text-danger see-all-link" @click="seeAll('three-d')">
             See all
           </div>
         </div>
@@ -249,29 +279,24 @@
             :key="index"
           >
             <img :src="game.img" :alt="game.title" />
-            <div class="book-title fw-semibold" style="font-size: 0.9rem">
+            <div class="book-title fw-semibold">
               {{ game.title }}
             </div>
-            <div class="book-author text-muted" style="font-size: 0.75rem">
-              Engine: {{ game.engine }}
+            <div class="book-author text-muted">
+              {{ game.author }}
             </div>
           </div>
         </div>
       </div>
 
       <!-- CONCEPT ART SECTION -->
-      <!-- Show if activeCategory is 'all' or 'concept-art' -->
       <div
         class="mb-5"
         v-show="activeCategory === 'all' || activeCategory === 'concept-art'"
       >
         <div class="d-flex justify-content-between align-items-baseline mb-2">
-          <h5 class="fw-semibold m-0" style="font-size: 1rem">Concept Art</h5>
-          <div
-            class="text-danger"
-            style="font-size: 0.9rem; cursor: pointer"
-            @click="seeAll('concept-art')"
-          >
+          <h5 class="fw-semibold m-0 section-title">Historical</h5>
+          <div class="text-danger see-all-link" @click="seeAll('concept-art')">
             See all
           </div>
         </div>
@@ -282,124 +307,101 @@
             :key="index"
           >
             <img :src="art.img" :alt="art.title" />
-            <div class="book-title fw-semibold" style="font-size: 0.9rem">
+            <div class="book-title fw-semibold">
               {{ art.title }}
             </div>
-            <div class="book-author text-muted" style="font-size: 0.75rem">
-              {{ art.engine }}
+            <div class="book-author text-muted">
+              {{ art.author }}
             </div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- BOOTSTRAP FIXED BOTTOM NAVBAR -->
-    <nav
-      class="navbar navbar-expand bg-black bottom-nav navbar-dark fixed-bottom"
-    >
-      <div class="container custom-container justify-content-around">
-        <!-- Home -->
-        <a class="nav-link text-center" href="#">
-          <i class="bi bi-house-door-fill"></i>
-          <div>Home</div>
+    <!-- PILL-SHAPED BOTTOM NAV -->
+    <nav class="bottom-nav-pills">
+      <div class="nav-content">
+        <a href="#" class="active">
+          <i class="bi bi-grid-fill"></i>
         </a>
-        <!-- Portfolio -->
-        <a class="nav-link text-center" href="#">
-          <i class="bi bi-collection-fill"></i>
-          <div>Portfolio</div>
+        <a href="#">
+          <i class="bi bi-search"></i>
         </a>
-        <!-- Blog -->
-        <a class="nav-link text-center" href="#">
-          <i class="bi bi-file-text-fill"></i>
-          <div>Blog</div>
+        <a href="#">
+          <i class="bi bi-bell-fill"></i>
         </a>
-        <!-- Contact -->
-        <a class="nav-link text-center" href="#">
-          <i class="bi bi-envelope-fill"></i>
-          <div>Contact</div>
+        <a href="#">
+          <i class="bi bi-person-fill"></i>
         </a>
       </div>
     </nav>
 
-    <!-- 3. Vue 3 (CDN) -->
+    <!-- Vue 3 (CDN) -->
     <script src="https://unpkg.com/vue@3"></script>
+    <!-- Bootstrap 5 JS (CDN) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
-    <!-- 4. Your Vue App Script -->
+    <!-- Your Vue App Script -->
     <script>
       const { createApp } = Vue;
 
       createApp({
         data() {
           return {
-            // Current active filter/category. 'all' by default
             activeCategory: "all",
-
-            // List of categories for the buttons
             categoryList: [
               { id: 1, name: "All", value: "all" },
-              { id: 2, name: "2D Games", value: "two-d" },
-              { id: 3, name: "3D Games", value: "three-d" },
-              { id: 4, name: "Concept Art", value: "concept-art" },
+              { id: 2, name: "Detective", value: "two-d" },
+              { id: 3, name: "Drama", value: "three-d" },
+              { id: 4, name: "Historical", value: "concept-art" },
             ],
-
-            // Sample 2D projects
             twoDProjects: [
               {
-                title: "2D Action",
-                engine: "Unity",
-                img: "https://via.placeholder.com/120x180/DA2D2D/FFFFFF?text=2D+Action",
+                title: "Moby Dick",
+                author: "Herman Meville",
+                img: "https://via.placeholder.com/160x240.png/BA3D3D/FFFFFF?text=Moby%20Dick",
               },
               {
-                title: "2D Puzzle",
-                engine: "Godot",
-                img: "https://via.placeholder.com/120x180/F7C63B/333333?text=2D+Puzzle",
+                title: "Authority",
+                author: "Jeff Vandermer",
+                img: "https://via.placeholder.com/160x240.png/F4C63C/333333?text=Authority",
               },
             ],
-
-            // Sample 3D projects
             threeDProjects: [
               {
-                title: "3D Horror",
-                engine: "Unreal",
-                img: "https://via.placeholder.com/120x180/333333/FFFFFF?text=3D+Horror",
+                title: "1000 Black",
+                author: "Author Name",
+                img: "https://via.placeholder.com/160x240.png/333333/FFFFFF?text=1000%20Black",
               },
               {
-                title: "3D Sandbox",
-                engine: "Unity",
-                img: "https://via.placeholder.com/120x180/666666/FFFFFF?text=3D+Sandbox",
+                title: "Another Book",
+                author: "Author Name",
+                img: "https://via.placeholder.com/160x240.png/666666/FFFFFF?text=Another%20Book",
               },
             ],
-
-            // Sample concept art
             conceptArtProjects: [
               {
-                title: "Character Design",
-                engine: "Hand-drawn",
-                img: "https://via.placeholder.com/120x180/BDB8A3/FFFFFF?text=Character+Design",
+                title: "Sapiens",
+                author: "Yuval Harari",
+                img: "https://via.placeholder.com/160x240.png/BDB8A3/FFFFFF?text=Sapiens",
               },
               {
-                title: "World Environment",
-                engine: "Digital Art",
-                img: "https://via.placeholder.com/120x180/FCE16A/333333?text=World+Env",
+                title: "History X",
+                author: "Author Name",
+                img: "https://via.placeholder.com/160x240.png/FCE16A/333333?text=History%20X",
               },
             ],
           };
         },
         methods: {
-          // Set the active category for filtering
           setCategory(categoryValue) {
             this.activeCategory = categoryValue;
           },
-          // Example: “See all” could do something extra, e.g., navigate or open a modal
           seeAll(section) {
             alert(`"See all" clicked for section: ${section}`);
-            // You could navigate, filter more items, open a new page, etc.
           },
         },
       }).mount("#app");
     </script>
-
-    <!-- Bootstrap 5 JS (CDN) -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   </body>
 </html>
