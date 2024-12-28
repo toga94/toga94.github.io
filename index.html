@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <!-- Make page responsive on mobile -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Game Developer Portfolio</title>
+    <title>Toghrul's Unity Portfolio</title>
 
     <!-- Bootstrap 5 CSS (CDN) -->
     <link
@@ -34,17 +34,19 @@
 
       body {
         font-family: "Calibra", sans-serif;
-        background-color: #F1EEE3;
+        background-color: #f1eee3;
         color: #222;
         margin: 0;
-        /* Enough bottom padding so the "pill" nav doesn't overlap content */
-        padding-bottom: 100px;
+        padding-bottom: 100px; /* Enough bottom padding so the pill nav doesn't overlap content */
       }
 
-      /* HEADER / NOTIFICATION CIRCLE */
+      /* 
+        PDF BUTTON (notification-circle) 
+        -> smaller than previous 100x100, let's do 80x80 
+      */
       .notification-circle {
-        width: 36px;
-        height: 36px;
+        width: 80px;
+        height: 80px;
         background-color: #000;
         border-radius: 50%;
         display: flex;
@@ -52,9 +54,10 @@
         justify-content: center;
         cursor: pointer;
       }
+      /* Icon inside the smaller circle: let's do 1.5rem (previously 2rem) */
       .notification-circle i {
         color: #fff;
-        font-size: 1.1rem;
+        font-size: 1.5rem;
       }
 
       .highlight {
@@ -67,14 +70,19 @@
         font-size: 28px;
       }
 
-      /* CATEGORY BUTTONS */
+      /*
+        CATEGORY BUTTONS (BIGGER):
+        - height: 66px (was 60)
+        - padding: 20px 36px (was 18px 32)
+        - font-size: 20px (was 18)
+      */
       .category-btn {
         border: none;
         border-radius: 20px;
-        height: 55px;
-        padding: 16px 28px;
-        font-size: 16px;
-        background-color: #E7E0CB;
+        height: 66px;
+        padding: 20px 36px;
+        font-size: 20px;
+        background-color: #e7e0cb;
         color: #222;
         white-space: nowrap;
         cursor: pointer;
@@ -102,69 +110,67 @@
       }
 
       /*
-        BOOK / PROJECT CARDS:
-        - Made bigger: width ~160px, height ~240px
+        GAME / PROJECT CARDS
+        (width=160, height=240 from before)
       */
-      .book-list {
+      .game-list {
         overflow-x: auto;
         white-space: nowrap;
       }
-      .book-card {
+      .game-card {
         display: inline-block;
-        width: 160px; /* bigger width */
+        width: 160px;
         margin-right: 20px;
         cursor: pointer;
         vertical-align: top;
       }
-      .book-card img {
+      .game-card img {
         width: 100%;
-        height: 240px; /* bigger height */
+        height: 240px;
         object-fit: cover;
         border-radius: 4px;
         margin-bottom: 4px;
       }
-      .book-title {
+      .game-title {
         font-size: 1.1rem;
       }
-      .book-author {
+      .game-author {
         font-size: 0.9rem;
       }
 
-      /* 
-        PILL-SHAPED BOTTOM NAV:
-        - Centered horizontally
-        - Slightly above the bottom 
-        - Rounded corners
-        - Icons spaced out
+      /*
+        PILL-SHAPED BOTTOM NAV (smaller):
+        - narrower width: 80%
+        - smaller max-width: 400px
+        - less top/bottom padding: 0.3rem
       */
       .bottom-nav-pills {
         position: fixed;
         left: 50%;
         bottom: 20px;
         transform: translateX(-50%);
-        width: 90%;
-        max-width: 500px;
+        width: 80%;
+        max-width: 400px;
         background-color: #000;
         color: #fff;
-        border-radius: 9999px; /* pill shape */
+        border-radius: 9999px;
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
         z-index: 9999;
-        padding: 0.5rem 0; /* top/bottom space inside pill */
+        padding: 0.3rem 0;
       }
       .bottom-nav-pills .nav-content {
         display: flex;
         justify-content: space-around;
         align-items: center;
       }
-      /* Icons a bit bigger, plus optional active color for one icon */
       .bottom-nav-pills .nav-content a {
         color: #fff;
-        font-size: 1.4rem;
+        font-size: 1.2rem;
         text-decoration: none;
-        padding: 0.5rem 0.75rem; /* clickable area */
+        padding: 0.3rem 0.5rem;
       }
       .bottom-nav-pills a.active {
-        color: #e05c5c; /* highlight color for active */
+        color: #e05c5c;
       }
 
       /* OPTIONAL: container max widths for bigger screens */
@@ -195,32 +201,32 @@
     <div id="app" class="container custom-container py-4">
       <!-- HEADER -->
       <header class="mb-4">
-        <!-- Top row: Avatar on the left, PDF icon on the right -->
+        <!-- Top row: Avatar on the left, PDF icon (now smaller) on the right -->
         <div class="d-flex justify-content-between align-items-center mb-3">
           <!-- Profile Image (100x100) -->
           <div class="profile-image">
             <img
               src="https://via.placeholder.com/100.png/000000/FFFFFF?text=Me"
-              alt="Profile"
+              alt="Toghrul"
               class="rounded-circle"
               style="width: 100px; height: 100px; object-fit: cover"
             />
           </div>
-          <!-- PDF Icon in black circle -->
+          <!-- PDF Icon Circle (80x80) -->
           <div class="notification-circle">
             <i class="bi bi-file-earmark-pdf-fill"></i>
           </div>
         </div>
 
         <h2 class="fw-normal">
-          Hey, <span class="highlight">I'm Steve!</span>
+          Hey, <span class="highlight">I'm Toghrul!</span>
         </h2>
         <p class="mb-0 text-secondary" style="font-size: 1rem">
-          What will you listen today?
+          Check out my Unity game dev projects.
         </p>
       </header>
 
-      <!-- CATEGORY FILTERS -->
+      <!-- CATEGORY FILTERS (BIGGER BUTTONS) -->
       <div class="d-flex gap-2 mb-4 overflow-auto">
         <button
           v-for="cat in categoryList"
@@ -233,58 +239,50 @@
         </button>
       </div>
 
-      <!-- 2D GAMES SECTION -->
+      <!-- 2D PROJECTS SECTION -->
       <div
         class="mb-4"
         v-show="activeCategory === 'all' || activeCategory === 'two-d'"
       >
         <div class="d-flex justify-content-between align-items-baseline mb-2">
-          <h5 class="fw-semibold m-0 section-title">Drama</h5>
+          <h5 class="fw-semibold m-0 section-title">2D Projects</h5>
           <div class="text-danger see-all-link" @click="seeAll('two-d')">
             See all
           </div>
         </div>
-        <div class="book-list">
+        <div class="game-list">
           <div
-            class="book-card"
-            v-for="(game, index) in twoDProjects"
+            class="game-card"
+            v-for="(proj, index) in twoDProjects"
             :key="index"
           >
-            <img :src="game.img" :alt="game.title" />
-            <div class="book-title fw-semibold">
-              {{ game.title }}
-            </div>
-            <div class="book-author text-muted">
-              {{ game.author }}
-            </div>
+            <img :src="proj.img" :alt="proj.title" />
+            <div class="game-title fw-semibold">{{ proj.title }}</div>
+            <div class="game-author text-muted">Engine: {{ proj.engine }}</div>
           </div>
         </div>
       </div>
 
-      <!-- 3D GAMES SECTION -->
+      <!-- 3D PROJECTS SECTION -->
       <div
         class="mb-4"
         v-show="activeCategory === 'all' || activeCategory === 'three-d'"
       >
         <div class="d-flex justify-content-between align-items-baseline mb-2">
-          <h5 class="fw-semibold m-0 section-title">Detective</h5>
+          <h5 class="fw-semibold m-0 section-title">3D Projects</h5>
           <div class="text-danger see-all-link" @click="seeAll('three-d')">
             See all
           </div>
         </div>
-        <div class="book-list">
+        <div class="game-list">
           <div
-            class="book-card"
-            v-for="(game, index) in threeDProjects"
+            class="game-card"
+            v-for="(proj, index) in threeDProjects"
             :key="index"
           >
-            <img :src="game.img" :alt="game.title" />
-            <div class="book-title fw-semibold">
-              {{ game.title }}
-            </div>
-            <div class="book-author text-muted">
-              {{ game.author }}
-            </div>
+            <img :src="proj.img" :alt="proj.title" />
+            <div class="game-title fw-semibold">{{ proj.title }}</div>
+            <div class="game-author text-muted">Engine: {{ proj.engine }}</div>
           </div>
         </div>
       </div>
@@ -295,30 +293,26 @@
         v-show="activeCategory === 'all' || activeCategory === 'concept-art'"
       >
         <div class="d-flex justify-content-between align-items-baseline mb-2">
-          <h5 class="fw-semibold m-0 section-title">Historical</h5>
+          <h5 class="fw-semibold m-0 section-title">Concept Art</h5>
           <div class="text-danger see-all-link" @click="seeAll('concept-art')">
             See all
           </div>
         </div>
-        <div class="book-list">
+        <div class="game-list">
           <div
-            class="book-card"
+            class="game-card"
             v-for="(art, index) in conceptArtProjects"
             :key="index"
           >
             <img :src="art.img" :alt="art.title" />
-            <div class="book-title fw-semibold">
-              {{ art.title }}
-            </div>
-            <div class="book-author text-muted">
-              {{ art.author }}
-            </div>
+            <div class="game-title fw-semibold">{{ art.title }}</div>
+            <div class="game-author text-muted">Engine: {{ art.engine }}</div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- PILL-SHAPED BOTTOM NAV -->
+    <!-- SMALL PILL-SHAPED BOTTOM NAV -->
     <nav class="bottom-nav-pills">
       <div class="nav-content">
         <a href="#" class="active">
@@ -348,55 +342,66 @@
       createApp({
         data() {
           return {
+            // Toggles which category is displayed; default "all"
             activeCategory: "all",
+
+            // Toghrul's categories
             categoryList: [
               { id: 1, name: "All", value: "all" },
-              { id: 2, name: "Detective", value: "two-d" },
-              { id: 3, name: "Drama", value: "three-d" },
-              { id: 4, name: "Historical", value: "concept-art" },
+              { id: 2, name: "2D Projects", value: "two-d" },
+              { id: 3, name: "3D Projects", value: "three-d" },
+              { id: 4, name: "Concept Art", value: "concept-art" },
             ],
+
+            // Sample 2D Projects
             twoDProjects: [
               {
-                title: "Moby Dick",
-                author: "Herman Meville",
-                img: "https://via.placeholder.com/160x240.png/BA3D3D/FFFFFF?text=Moby%20Dick",
+                title: "2D Action",
+                engine: "Unity",
+                img: "https://via.placeholder.com/160x240.png/DA2D2D/FFFFFF?text=2D%20Action",
               },
               {
-                title: "Authority",
-                author: "Jeff Vandermer",
-                img: "https://via.placeholder.com/160x240.png/F4C63C/333333?text=Authority",
+                title: "2D Puzzle",
+                engine: "Unity",
+                img: "https://via.placeholder.com/160x240.png/F4C63C/333333?text=2D%20Puzzle",
               },
             ],
+
+            // Sample 3D Projects
             threeDProjects: [
               {
-                title: "1000 Black",
-                author: "Author Name",
-                img: "https://via.placeholder.com/160x240.png/333333/FFFFFF?text=1000%20Black",
+                title: "3D Sandbox",
+                engine: "Unity",
+                img: "https://via.placeholder.com/160x240.png/666666/FFFFFF?text=3D%20Sandbox",
               },
               {
-                title: "Another Book",
-                author: "Author Name",
-                img: "https://via.placeholder.com/160x240.png/666666/FFFFFF?text=Another%20Book",
+                title: "3D Horror",
+                engine: "Unity",
+                img: "https://via.placeholder.com/160x240.png/333333/FFFFFF?text=3D%20Horror",
               },
             ],
+
+            // Sample Concept Art
             conceptArtProjects: [
               {
-                title: "Sapiens",
-                author: "Yuval Harari",
-                img: "https://via.placeholder.com/160x240.png/BDB8A3/FFFFFF?text=Sapiens",
+                title: "Character Design",
+                engine: "Hand-drawn",
+                img: "https://via.placeholder.com/160x240.png/BDB8A3/FFFFFF?text=Character%20Design",
               },
               {
-                title: "History X",
-                author: "Author Name",
-                img: "https://via.placeholder.com/160x240.png/FCE16A/333333?text=History%20X",
+                title: "World Environment",
+                engine: "Digital Art",
+                img: "https://via.placeholder.com/160x240.png/FCE16A/333333?text=World%20Env",
               },
             ],
           };
         },
         methods: {
+          // Switches the displayed category
           setCategory(categoryValue) {
             this.activeCategory = categoryValue;
           },
+          // "See all" placeholder
           seeAll(section) {
             alert(`"See all" clicked for section: ${section}`);
           },
